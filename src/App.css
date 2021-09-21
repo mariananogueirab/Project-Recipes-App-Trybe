@@ -1,4 +1,11 @@
-.meals {
+@media screen and (min-width: 360px) and (min-height: 640px){
+  * {
+    background-color: red;
+  }
+
+}
+
+/* .meals {
   align-items: center;
   background: #0fa36b;
   color: #464646;
@@ -13,7 +20,7 @@
 .rocksGlass {
   animation: shake 1s infinite ease;
   max-height: 80vh;
-}
+} */
 
 /*
 #iceLeft {
@@ -29,7 +36,7 @@
 }
 */
 
-.meals > .logo {
+/* .meals > .logo {
   animation: shake 1.5s infinite ease;
   color: aliceblue;
   font-family: Montserrat , sans-serif;
@@ -66,3 +73,4 @@
     transform: rotate(-10deg);
   }
 }
+ */
