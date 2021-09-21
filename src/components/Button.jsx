@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Button({ testid }) {
+function Button({ testid, disabled }) {
   return (
-    <button type="button" data-testid={ testid }>
+    <button type="submit" data-testid={ testid } disabled={ disabled }>
       Entrar
     </button>
 
@@ -12,6 +12,7 @@ function Button({ testid }) {
 
 Button.propTypes = {
   testid: PropTypes.string.isRequired,
+  disabled: PropTypes.bool.isRequired,
 };
 
 export default Button;
