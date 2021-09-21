@@ -1,15 +1,19 @@
 import React from 'react';
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route, Switch } from 'react-router-dom';
+
 import Login from './pages/Login';
+import Profile from './components/Profile';
 import RecipesProvider from './context/RecipesProvider';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 
 function App() {
   return (
     <RecipesProvider>
       <Switch>
         <Route exact path="/" component={ Login } />
+        <Route exact path="/perfil" render={ (props) => <Profile { ...props } /> } />
         {/* <Route path="/comidas" component={ Foods } />
       <Route exact path="/bebidas" component={ Drinks } />
       <Route exact path="/comidas/:id" component={ FoodsDetails } />
@@ -22,8 +26,6 @@ function App() {
       <Route exact path="/explorar/comidas/ingredientes" component={ ExploreFoodsIngredients } />
       <Route exact path="/explorar/bebidas/ingredientes" component={ ExploreDrinksIngredients } />
       <Route exact path="/explorar/comidas/area" component={ ExploreFoodsArea } />
-      <Route exact path="/perfil" component={ Profile } />
-      <Route exact path="/receitas-feitas" component={ RecipesMade } />
       <Route exact path="/receitas-favoritas" component={ FavoritesRecipes } /> */}
       </Switch>
     </RecipesProvider>
