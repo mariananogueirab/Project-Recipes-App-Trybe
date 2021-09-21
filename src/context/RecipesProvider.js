@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import RecipesContext from './RecipesContext';
 
 function RecipesProvider({ children }) {
-  const [email, setEmail] = useState(''); // Estado global do email
+  const contextValue = {};
 
   return (
-    <RecipesContext.Provider value={ { email, setEmail } }>
+    <RecipesContext.Provider value={ contextValue }>
       {children}
     </RecipesContext.Provider>
   );

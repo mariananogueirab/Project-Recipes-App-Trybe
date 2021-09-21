@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import Login from './pages/Login';
-import Profile from './components/Profile';
+import Profile from './pages/Profile';
 import RecipesProvider from './context/RecipesProvider';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
