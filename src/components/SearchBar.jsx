@@ -22,16 +22,6 @@ function SearchBar({ path }) {
 
   return (
     <form onSubmit={ handleClick }>
-      <div>
-        <span data-testid="search-top-btn">SearchBar</span>
-      </div>
-
-      <input
-        type="text"
-        name="searchText"
-        onChange={ handleChangeSearch }
-        data-testid="search-input"
-      />
       <label htmlFor="ingredient">
         Ingrediente
         <input

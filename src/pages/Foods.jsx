@@ -5,6 +5,7 @@ import SearchBar from '../components/SearchBar';
 import Footer from '../components/Footer';
 import RecipesContext from '../context/RecipesContext';
 import RecipesCardFood from '../components/RecipesCardFood';
+import Header from '../components/Header';
 
 function Foods({ match: { path } }) {
   const { data: { recipes } } = useContext(RecipesContext);
@@ -18,7 +19,6 @@ function Foods({ match: { path } }) {
     }/*  else if (recipes === []) {
       global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     } */
-    console.log(recipes);
   }, [recipes, history]);
 
   useEffect(() => {
@@ -27,6 +27,7 @@ function Foods({ match: { path } }) {
 
   return (
     <div>
+      <Header pageTitle="Comidas" hasSearchIcon="active" />
       <SearchBar path={ path } />
       {
         redirectRecipies()
@@ -40,7 +41,6 @@ Foods.propTypes = {
   match: PropTypes.shape({
     path: PropTypes.string,
   }),
-  history: PropTypes.objectOf(String),
 }.isRequired;
 
 export default Foods;
