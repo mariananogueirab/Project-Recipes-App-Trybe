@@ -1,12 +1,14 @@
 import React, { useCallback, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router';
 import SearchBar from '../components/SearchBar';
 import Footer from '../components/Footer';
 import RecipesContext from '../context/RecipesContext';
 import RecipesCardDrink from '../components/RecipesCardDrink';
 
-function Drinks({ match: { path }, history }) {
+function Drinks({ match: { path } }) {
   const { data: { recipes } } = useContext(RecipesContext);
+  const history = useHistory();
 
   const redirectRecipies = useCallback(() => {
     if (recipes.length === 1) {

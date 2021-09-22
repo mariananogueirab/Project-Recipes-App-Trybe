@@ -1,23 +1,25 @@
 import React, { useCallback, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router';
 import SearchBar from '../components/SearchBar';
 import Footer from '../components/Footer';
 import RecipesContext from '../context/RecipesContext';
 import RecipesCardFood from '../components/RecipesCardFood';
 
-function Foods({ match: { path }, history }) {
-  const { data: { recipes }, isLoading } = useContext(RecipesContext);
+function Foods({ match: { path } }) {
+  const { data: { recipes } } = useContext(RecipesContext);
+  const history = useHistory();
 
   const redirectRecipies = useCallback(() => {
     if (recipes.length === 1) {
       history.push(`/comidas/${recipes[0].idMeal}`);
     } else if (recipes.length > 1) {
       return <RecipesCardFood />;
-    } else if (recipes.length < 1 && isLoading) {
+    }/*  else if (recipes === []) {
       global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
-    }
+    } */
     console.log(recipes);
-  }, [recipes, history, isLoading]);
+  }, [recipes, history]);
 
   useEffect(() => {
     redirectRecipies();

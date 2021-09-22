@@ -4,6 +4,7 @@ import RecipesContext from '../context/RecipesContext';
 
 function RecipesCardFood() {
   const { data: { recipes } } = useContext(RecipesContext);
+  const number = 12;
   return (
     <div>
       {
@@ -20,7 +21,7 @@ function RecipesCardFood() {
             <h2 data-testid={ `${index}-card-name}` }>{ strMeal }</h2>
             <span>{ strCategory }</span>
           </div>
-        ))
+        )).slice(0, number)
       }
     </div>
   );
