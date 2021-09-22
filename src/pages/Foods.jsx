@@ -12,13 +12,15 @@ function Foods({ match: { path } }) {
   const history = useHistory();
 
   const redirectRecipies = useCallback(() => {
+    const msg = 'Sinto muito, não encontramos nenhuma receita para esses filtros.';
+    if (!recipes) {
+      return global.alert(msg);
+    }
     if (recipes.length === 1) {
       history.push(`/comidas/${recipes[0].idMeal}`);
     } else if (recipes.length > 1) {
       return <RecipesCardFood />;
-    }/*  else if (recipes === []) {
-      global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
-    } */
+    }
   }, [recipes, history]);
 
   useEffect(() => {

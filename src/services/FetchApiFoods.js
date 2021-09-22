@@ -46,6 +46,9 @@ function FetchApiFoods(searchText, searchRadio, setSearchFood) {
       global.alert('Sua busca deve conter somente 1 (um) caracter');
     }
     break;
+  case '':
+    getApiByFirstLetter(searchText, setSearchFood);
+    break;
   default:
     break;
   }
