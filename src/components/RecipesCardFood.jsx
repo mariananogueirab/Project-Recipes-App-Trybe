@@ -8,7 +8,7 @@ function RecipesCardFood() {
   return (
     <div>
       {
-        recipes.map(({ idMeal, strMeal, strMealThumb }, index) => (
+        recipes.map(({ idMeal, strMeal, strCategory, strMealThumb }, index) => (
           <div
             data-testid={ `${index}-recipe-card` }
             key={ idMeal }
@@ -18,7 +18,8 @@ function RecipesCardFood() {
               src={ strMealThumb }
               alt={ strMeal }
             />
-            <h2 data-testid={ `${index}-card-name` }>{ strMeal }</h2>
+            <h2 data-testid={ `${index}-card-name}` }>{ strMeal }</h2>
+            <span>{ strCategory }</span>
           </div>
         )).slice(0, number)
       }
