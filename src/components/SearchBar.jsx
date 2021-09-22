@@ -1,49 +1,22 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesContext';
-import {
-  getApiByFirstLetter,
-  getApiByName,
-  getApiByIngrediente } from '../services/FetchAPI';
+import FetchApiDrinks from '../services/FetchApiDrinks';
+import FetchApiFoods from '../services/FetchApiFoods';
 
-function SearchBar() {
-  const [selected, setSelected] = useState({
-    searchText: '',
-    searchRadio: '',
-  });
-
-  const { setSearchFood } = useContext(RecipesContext);
-
-  /* lidar com as opçoes de ingredientes e salve no state local */
-  const handleChange = ({ target: { name, value } }) => {
-    setSelected((prevState) => ({ ...prevState, [name]: value }));
-  };
-
-  const text = selected.searchText;
-  /* submete o reultado da busca e faz a requisição da api salvando no state local */
+function SearchBar({ path }) {
+  const { handleChangeSearch } = useContext(RecipesContext);
+  const {
+    selected: { searchText, searchRadio },
+    setSearchFood } = useContext(RecipesContext);
+  /* submete o reultado da busca e faz a requisição da api salvando no state global */
   const handleClick = (event) => {
     event.preventDefault();
-    switch (selected.searchRadio) {
-    case 'ingredient':
-      getApiByIngrediente(text).then((response) => (
-        setSearchFood(response.meals)
-      ));
-      break;
-    case 'name':
-      getApiByName(text).then((response) => (
-        setSearchFood(response.meals)
-      ));
-      break;
-    case 'first-letter':
-      if (text.length === 1) {
-        getApiByFirstLetter(text).then((response) => (
-          setSearchFood(response.meals)
-        ));
-      } else {
-        global.alert('Sua busca deve conter somente 1 (um) caracter');
-      }
-      break;
-    default:
-      break;
+
+    if (path === '/comidas') {
+      FetchApiFoods(searchText, searchRadio, setSearchFood);
+    } else if (path === '/bebidas') {
+      FetchApiDrinks(searchText, searchRadio, setSearchFood);
     }
   };
 
@@ -56,7 +29,7 @@ function SearchBar() {
       <input
         type="text"
         name="searchText"
-        onChange={ handleChange }
+        onChange={ handleChangeSearch }
         data-testid="search-input"
       />
       <label htmlFor="ingredient">
@@ -66,7 +39,7 @@ function SearchBar() {
           type="radio"
           value="ingredient"
           name="searchRadio"
-          onChange={ handleChange }
+          onChange={ handleChangeSearch }
           data-testid="ingredient-search-radio"
         />
       </label>
@@ -77,7 +50,7 @@ function SearchBar() {
           type="radio"
           value="name"
           name="searchRadio"
-          onChange={ handleChange }
+          onChange={ handleChangeSearch }
           data-testid="name-search-radio"
         />
       </label>
@@ -88,7 +61,7 @@ function SearchBar() {
           type="radio"
           value="first-letter"
           name="searchRadio"
-          onChange={ handleChange }
+          onChange={ handleChangeSearch }
           data-testid="first-letter-search-radio"
         />
       </label>
@@ -102,5 +75,9 @@ function SearchBar() {
     </form>
   );
 }
+
+SearchBar.propTypes = {
+  path: PropTypes.string.isRequired,
+};
 
 export default SearchBar;

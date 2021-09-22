@@ -4,17 +4,28 @@ import RecipesContext from './RecipesContext';
 
 function RecipesProvider({ children }) {
   const [data, setdata] = useState({
-    food: [],
+    recipes: [],
     isLoading: false,
   });
 
   const setSearchFood = (search) => {
-    setdata((prevState) => ({ ...prevState, food: search, isLoading: true }));
+    setdata((prevState) => ({ ...prevState, recipes: search, isLoading: true }));
+  };
+
+  const [selected, setSelected] = useState({
+    searchText: '',
+    searchRadio: '',
+  });
+
+  const handleChangeSearch = ({ target: { name, value } }) => {
+    setSelected((prevState) => ({ ...prevState, [name]: value }));
   };
 
   const contextValue = {
     data,
+    selected,
     setSearchFood,
+    handleChangeSearch,
   };
 
   return (
