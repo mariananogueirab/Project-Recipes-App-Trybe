@@ -3,16 +3,15 @@ import React, { useState } from 'react';
 function SearchBar() {
   const [searchSelected, setSearchSelected] = useState({
     searchRadio: '',
-    searchInput: '',
   });
-
+  /* lidar com as opçoes de ingredientes e salve no state local */
   const handleChange = ({ target: { name, value } }) => {
     setSearchSelected((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
-
+  /* submete o reultado da busca e faz a requisição da api salvando no state local */
   const handleClick = (event) => {
     event.preventDefault();
     console.log(searchSelected);
@@ -20,15 +19,6 @@ function SearchBar() {
 
   return (
     <form onSubmit={ handleClick }>
-      <label htmlFor="search-input">
-        <input
-          id="search-input"
-          typy="text"
-          name="searchInput"
-          placeholder="Buscar Receita"
-          onChange={ handleChange }
-        />
-      </label>
       <label htmlFor="ingredient">
         Ingrediente
         <input
