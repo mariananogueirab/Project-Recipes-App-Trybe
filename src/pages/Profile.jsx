@@ -1,17 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Profile({ history }) {
-  function getLocalStorage(key) {
-    if (localStorage.key(key)) {
-      return localStorage.getItem(key);
-    }
+import { useHistory } from 'react-router';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
+
+function Profile() {
+  function getEmail() {
+    const user = JSON.parse(localStorage.getItem('user'));
+    return user.email;
   }
 
+  const history = useHistory();
   return (
     <main>
+      <Header pageTitle="Perfil" hasSearchIcon={ false } />
       <h2 data-testid="profile-email">
-        {getLocalStorage('email')}
+        { getEmail() }
       </h2>
       <button
         data-testid="profile-done-btn"
@@ -41,6 +46,7 @@ function Profile({ history }) {
       >
         Sair
       </button>
+      <Footer />
     </main>
   );
 }
