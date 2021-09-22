@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SearchBar from '../components/SearchBar';
+import Footer from '../components/Footer';
 
 function Foods({ match: { path } }) {
   return (
-
-    <SearchBar path={ path } />
-
+    <div>
+      <SearchBar path={ path } />
+      <Footer />
+    </div>
   );
 }
 
