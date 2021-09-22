@@ -1,14 +1,21 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import RecipesContext from '../context/RecipesContext';
 
 function Header({ pageTitle, hasSearchIcon }) {
   // estado para verificar se ao clicar no ícone, o mesmo é transformado em um input
   const [activeSearchBar, setActiveSearchBar] = useState(false);
+  const { handleChangeSearch } = useContext(RecipesContext);
 
-  const searchBarAsInput = <input type="text" data-testid="search-input" />;
+  const searchBarAsInput = (<input
+    type="text"
+    data-testid="search-input"
+    name="searchText"
+    onChange={ handleChangeSearch }
+  />);
 
   const renderSearchBarIcon = () => {
     if (!hasSearchIcon) return;
