@@ -1,24 +1,64 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import RecipesContext from '../context/RecipesContext';
+import {
+  getApiByFirstLetter,
+  getApiByName,
+  getApiByIngrediente } from '../services/FetchAPI';
 
 function SearchBar() {
-  const [searchSelected, setSearchSelected] = useState({
+  const [selected, setSelected] = useState({
+    searchText: '',
     searchRadio: '',
   });
+
+  const { setSearchFood } = useContext(RecipesContext);
+
   /* lidar com as opçoes de ingredientes e salve no state local */
   const handleChange = ({ target: { name, value } }) => {
-    setSearchSelected((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    setSelected((prevState) => ({ ...prevState, [name]: value }));
   };
+
+  const text = selected.searchText;
   /* submete o reultado da busca e faz a requisição da api salvando no state local */
   const handleClick = (event) => {
     event.preventDefault();
-    console.log(searchSelected);
+    switch (selected.searchRadio) {
+    case 'ingredient':
+      getApiByIngrediente(text).then((response) => (
+        setSearchFood(response.meals)
+      ));
+      break;
+    case 'name':
+      getApiByName(text).then((response) => (
+        setSearchFood(response.meals)
+      ));
+      break;
+    case 'first-letter':
+      if (text.length === 1) {
+        getApiByFirstLetter(text).then((response) => (
+          setSearchFood(response.meals)
+        ));
+      } else {
+        global.alert('Sua busca deve conter somente 1 (um) caracter');
+      }
+      break;
+    default:
+      break;
+    }
   };
 
   return (
     <form onSubmit={ handleClick }>
+      <div>
+        <span data-testid="search-top-btn">SearchBar</span>
+      </div>
+
+      <input
+        type="text"
+        name="searchText"
+        onChange={ handleChange }
+        data-testid="search-input"
+      />
       <label htmlFor="ingredient">
         Ingrediente
         <input
