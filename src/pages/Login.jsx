@@ -42,7 +42,7 @@ function Login() {
       />
 
       <Input
-        type="text"
+        type="password"
         testid="password-input"
         value={ login.password }
         onChange={ ({ target }) => {
