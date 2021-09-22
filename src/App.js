@@ -1,8 +1,8 @@
 import React from 'react';
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route, Switch } from 'react-router-dom';
+
 import Login from './pages/Login';
+import Profile from './pages/Profile';
 import RecipesProvider from './context/RecipesProvider';
 import Foods from './pages/Foods';
 import Drinks from './pages/Drinks';
@@ -11,18 +11,21 @@ import ExploreDrinks from './pages/ExploreDrinks';
 import ExploreDrinksIngredients from './pages/ExploreDrinksIngredients';
 import ExploreFoodsIngredients from './pages/ExploreFoodsIngredients';
 import ExploreFoodsArea from './pages/ExploreFoodsArea';
-import Profile from './pages/Profile';
 import ExploreFoods from './pages/ExploreFoods';
 import FoodsDetails from './pages/FoodsDetails';
 import DrinksDetails from './pages/DrinksDetails';
 import RecipesMade from './pages/RecipesMade';
 import FavoritesRecipes from './pages/FavoritesRecipes';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
+
 function App() {
   return (
     <RecipesProvider>
       <Switch>
         <Route exact path="/" component={ Login } />
+        <Route exact path="/perfil" component={ Profile } />
         <Route exact path="/comidas" component={ Foods } />
         <Route exact path="/bebidas" component={ Drinks } />
         <Route exact path="/comidas/:id" component={ FoodsDetails } />
