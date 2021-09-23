@@ -1,10 +1,10 @@
 import React from 'react';
-import RecipesCardDrink from '../components/RecipesCardDrink';
+// import RecipesCardDrink from '../components/RecipesCardDrink';
 
 function DrinksDetails() {
   return (
     <div>
-      <RecipesCardDrink />
+      RecipesCardDrink
     </div>
   );
 }
