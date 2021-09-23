@@ -1,23 +1,11 @@
 /* eslint-disable react/jsx-closing-tag-location */
-import React, { useCallback, useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import RecipesContext from '../context/RecipesContext';
-import FetchApiFoods from '../services/FetchApiFoods';
 
 function RecipesCardFood() {
-  const {
-    data: { recipes },
-    selected: { searchText, searchRadio },
-    setSearchFood } = useContext(RecipesContext);
+  const { data: { recipes } } = useContext(RecipesContext);
 
   const number = 12;
-
-  const redirectRecipies = useCallback(() => {
-    FetchApiFoods(searchText, searchRadio, setSearchFood);
-  }, [searchText, searchRadio, setSearchFood]);
-
-  useEffect(() => {
-    redirectRecipies();
-  }, []);
 
   return (
     <div>
