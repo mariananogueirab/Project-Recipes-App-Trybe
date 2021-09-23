@@ -4,11 +4,13 @@ import RecipesContext from '../context/RecipesContext';
 
 function RecipesCardFood() {
   const { data: { recipes } } = useContext(RecipesContext);
+
   const number = 12;
+
   return (
     <div>
       {
-        recipes.map(({ idMeal, strMeal, strCategory, strMealThumb }, index) => (
+        recipes.map(({ idMeal, strMeal, strMealThumb }, index) => (
           <div
             data-testid={ `${index}-recipe-card` }
             key={ idMeal }
@@ -18,8 +20,7 @@ function RecipesCardFood() {
               src={ strMealThumb }
               alt={ strMeal }
             />
-            <h2 data-testid={ `${index}-card-name}` }>{ strMeal }</h2>
-            <span>{ strCategory }</span>
+            <h2 data-testid={ `${index}-card-name` }>{ strMeal }</h2>
           </div>
         )).slice(0, number)
       }

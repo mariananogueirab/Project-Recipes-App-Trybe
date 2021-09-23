@@ -2,13 +2,15 @@
 import React, { useContext } from 'react';
 import RecipesContext from '../context/RecipesContext';
 
-function RecipesCardFood() {
+function RecipesCardDrink() {
   const { data: { recipes } } = useContext(RecipesContext);
+
   const number = 12;
+
   return (
     <div>
       {
-        recipes.map(({ idDrink, strDrink, strCategory, strDrinkThumb }, index) => (
+        recipes.map(({ idDrink, strDrink, strDrinkThumb }, index) => (
           <div
             data-testid={ `${index}-recipe-card` }
             key={ idDrink }
@@ -18,8 +20,7 @@ function RecipesCardFood() {
               src={ strDrinkThumb }
               alt={ strDrink }
             />
-            <h2 data-testid={ `${index}-card-name}` }>{ strDrink }</h2>
-            <span>{ strCategory }</span>
+            <h2 data-testid={ `${index}-card-name` }>{ strDrink }</h2>
           </div>
         )).slice(0, number)
       }
@@ -27,4 +28,4 @@ function RecipesCardFood() {
   );
 }
 
-export default RecipesCardFood;
+export default RecipesCardDrink;
