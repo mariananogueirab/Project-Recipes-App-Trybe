@@ -11,12 +11,17 @@ function Drinks({ match: { path } }) {
   const { data: { recipes } } = useContext(RecipesContext);
 
   const history = useHistory();
-  console.log(history);
+
   const redirectRecipies = useCallback(() => {
+    const msg = 'Sinto muito, não encontramos nenhuma receita para esses filtros.';
+    if (!recipes) {
+      return global.alert(msg);
+    }
     if (recipes.length === 1) {
       history.push(`/bebidas/${recipes[0].idDrink}`);
+    } else {
+      return <RecipesCardDrink />;
     }
-    return <RecipesCardDrink />;
   }, [recipes, history]);
 
   useEffect(() => {
