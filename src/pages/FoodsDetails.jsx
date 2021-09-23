@@ -1,35 +1,34 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import { useHistory } from 'react-router';
 import ShareIcon from '../components/ShareIcon';
 import FavoriteIcon from '../components/FavoriteIcon';
 import Button from '../components/Button';
+import { getFoodById, getDrinksRecomendation } from '../services/FetchApiAll';
 
-function FoodsDetails({ match: { params: { id } } }) {
+function FoodsDetails() {
   const [recipe, getRecipe] = useState({});
   const [drinksRecomendations, setDrinksRecomendations] = useState([]);
   const [loading, setLoading] = useState(false);
-  const API_BY_ID = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=';
-  const API_DRINKS_RECOMENDATION = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+  const INDEX_ID = 9;
+  const id = useHistory().location.pathname.slice(INDEX_ID);
+
+  console.log(drinksRecomendations);
 
   useEffect(() => { // faz a requisição pra api pelo id, o requisito pede
     async function getRecipeById() {
-      const { meals } = await fetch(`${API_BY_ID}${id}`)
-        .then((res) => res.json());
+      const meals = await getFoodById(id);
       getRecipe(meals[0]);
       setLoading(true);
     }
     getRecipeById();
   }, [id]);
 
-  console.log(drinksRecomendations);
-
   useEffect(() => { // faz a requisição pra api da recomendação de drinks
-    async function getDrinksRecomendation() {
-      const { drinks } = await fetch(API_DRINKS_RECOMENDATION)
-        .then((res) => res.json());
+    async function getDrinksRecom() {
+      const drinks = getDrinksRecomendation();
       setDrinksRecomendations(drinks);
     }
-    getDrinksRecomendation();
+    getDrinksRecom();
   }, []);
 
   function getIngredientsAndMeasures() { // Essa função pega as chaves dos ingredientes e junta com as medidas, juga em um array e filtra o que for nulo ou vazio ou undefined
@@ -89,9 +88,5 @@ function FoodsDetails({ match: { params: { id } } }) {
     </div>
   );
 }
-
-FoodsDetails.propTypes = {
-  match: PropTypes.objectOf(PropTypes.string).isRequired,
-};
 
 export default FoodsDetails;

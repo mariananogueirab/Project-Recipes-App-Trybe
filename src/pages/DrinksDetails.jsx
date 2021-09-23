@@ -1,35 +1,34 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import { useHistory } from 'react-router';
 import ShareIcon from '../components/ShareIcon';
 import FavoriteIcon from '../components/FavoriteIcon';
 import Button from '../components/Button';
+import { getDrinkById, getFoodsRecomendation } from '../services/FetchApiAll';
 
-function DrinksDetails({ match: { params: { id } } }) {
+function DrinksDetails() {
   const [drink, getDrink] = useState({});
   const [foodsRecomendations, setFoodsRecomendations] = useState([]);
   const [loading, setLoading] = useState(false);
-  const API_BY_ID = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=';
-  const API_FOODS_RECOMENDATION = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
-
-  useEffect(() => { // faz a requisição pra api pelo id, o requisito pede
-    async function getDrinkById() {
-      const { drinks } = await fetch(`${API_BY_ID}${id}`)
-        .then((res) => res.json());
-      getDrink(drinks[0]);
-      setLoading(true);
-    }
-    getDrinkById();
-  }, [id]);
+  const INDEX_ID = 9;
+  const id = useHistory().location.pathname.slice(INDEX_ID);
 
   console.log(foodsRecomendations);
 
+  useEffect(() => { // faz a requisição pra api pelo id
+    async function getDrinks() {
+      const drinks = await getDrinkById(id);
+      getDrink(drinks[0]);
+      setLoading(true);
+    }
+    getDrinks();
+  }, [id]);
+
   useEffect(() => { // faz a requisição pra api da recomendação de comidas
-    async function getFoodsRecomendation() {
-      const { meals } = await fetch(API_FOODS_RECOMENDATION)
-        .then((res) => res.json());
+    async function getFoodsRecom() {
+      const meals = await getFoodsRecomendation();
       setFoodsRecomendations(meals);
     }
-    getFoodsRecomendation();
+    getFoodsRecom();
   }, []);
 
   function getIngredientsAndMeasures() { // Essa função pega as chaves dos ingredientes e junta com as medidas, juga em um array e filtra o que for nulo ou vazio ou undefined
@@ -85,9 +84,5 @@ function DrinksDetails({ match: { params: { id } } }) {
     </div>
   );
 }
-
-DrinksDetails.propTypes = {
-  match: PropTypes.objectOf(PropTypes.string).isRequired,
-};
 
 export default DrinksDetails;
