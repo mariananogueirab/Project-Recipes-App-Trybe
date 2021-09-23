@@ -59,6 +59,7 @@ function Login() {
         testid="login-submit-btn"
         disabled={ enableButton }
         onClick={ handleButtonLogin }
+        label="Entrar"
       />
     </div>
   );
