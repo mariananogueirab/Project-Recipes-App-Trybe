@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-describe.only('Profile screen', () => {
+describe('Profile screen', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000/perfil', {
       onBeforeLoad(win) {
