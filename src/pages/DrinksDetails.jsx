@@ -6,10 +6,12 @@ import Button from '../components/Button'
 
 function DrinksDetails({ match: { params: { id } } }) {
   const [drink, getDrink] = useState({});
+  const [foodsRecomendations, setFoodsRecomendations] = useState([]);
   const [loading, setLoading] = useState(false);
   const API_BY_ID = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=';
+  const API_FOODS_RECOMENDATION = 'https://www.themealdb.com/api/json/v1/1/search.php?s='
 
-  useEffect(() => {
+  useEffect(() => { // faz a requisição pra api pelo id, o requisito pede
     async function getDrinkById() {
       const { drinks } = await fetch(`${API_BY_ID}${id}`)
       .then((res) => res.json());
@@ -19,7 +21,16 @@ function DrinksDetails({ match: { params: { id } } }) {
     getDrinkById();
   }, [id]);
 
-  function getIngredientsAndMeasures() {
+  useEffect(() => { // faz a requisição pra api da recomendação de comidas
+    async function getFoodsRecomendation() {
+      const { meals } = await fetch(API_FOODS_RECOMENDATION)
+      .then((res) => res.json());
+      setFoodsRecomendations(meals);
+    }
+    getFoodsRecomendation();
+  }, []);
+
+  function getIngredientsAndMeasures() { // Essa função pega as chaves dos ingredientes e junta com as medidas, juga em um array e filtra o que for nulo ou vazio ou undefined
     let ingredients = [];
     if(loading) {
       for (let indice = 1; indice <= 20; indice += 1) {
@@ -28,7 +39,7 @@ function DrinksDetails({ match: { params: { id } } }) {
         const strIngAndMeas = `${drink[strIng]} - ${drink[strMeas]}`;
         ingredients = [...ingredients, strIngAndMeas];
       }
-      const finalingredients = ingredients.filter((ingredient) => (ingredient !== "null - null") && ingredient !== "undefined - undefined");
+      const finalingredients = ingredients.filter((ingredient) => ingredient !== ' -  ' && ingredient !== "null - null" && ingredient !== "undefined - undefined");
       console.log(finalingredients)
       return finalingredients;
     }
