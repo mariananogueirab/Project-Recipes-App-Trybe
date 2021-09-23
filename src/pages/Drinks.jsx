@@ -9,6 +9,7 @@ import Header from '../components/Header';
 
 function Drinks({ match: { path } }) {
   const { data: { recipes } } = useContext(RecipesContext);
+
   const history = useHistory();
 
   const redirectRecipies = useCallback(() => {

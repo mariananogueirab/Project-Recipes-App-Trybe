@@ -1,6 +1,17 @@
 const API_BY_INGREDIENT = 'https://www.themealdb.com/api/json/v1/1/filter.php?i=';
 const API_BY_NAME = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
 const API_BY_FIRST_LETTER = 'https://www.themealdb.com/api/json/v1/1/search.php?f=';
+const API_BY_ALL_FOODS = 'https://www.themealdb.com/api/json/v1/1/filter.php?c=Seafood';
+
+async function getApiByAllFoods(callback) {
+  try {
+    const results = await fetch(`${API_BY_ALL_FOODS}`)
+      .then((res) => res.json());
+    callback(results.meals);
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 async function getApiByIngrediente(ingredient, callback) {
   try {
@@ -33,6 +44,9 @@ async function getApiByFirstLetter(firstLetter, callback) {
 
 function FetchApiFoods(searchText, searchRadio, setSearchFood) {
   switch (searchRadio) {
+  case '':
+    getApiByAllFoods(setSearchFood);
+    break;
   case 'ingredient':
     getApiByIngrediente(searchText, setSearchFood);
     break;

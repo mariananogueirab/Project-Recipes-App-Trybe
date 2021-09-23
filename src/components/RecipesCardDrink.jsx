@@ -1,10 +1,24 @@
 /* eslint-disable react/jsx-closing-tag-location */
-import React, { useContext } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import RecipesContext from '../context/RecipesContext';
+import FetchApiDrinks from '../services/FetchApiDrinks';
 
-function RecipesCardFood() {
-  const { data: { recipes } } = useContext(RecipesContext);
+function RecipesCardDrink() {
+  const {
+    data: { recipes },
+    selected: { searchText, searchRadio },
+    setSearchFood } = useContext(RecipesContext);
+
   const number = 12;
+
+  const redirectRecipies = useCallback(() => {
+    FetchApiDrinks(searchText, searchRadio, setSearchFood);
+  }, [searchText, searchRadio, setSearchFood]);
+
+  useEffect(() => {
+    redirectRecipies();
+  }, []);
+
   return (
     <div>
       {
@@ -26,4 +40,4 @@ function RecipesCardFood() {
   );
 }
 
-export default RecipesCardFood;
+export default RecipesCardDrink;

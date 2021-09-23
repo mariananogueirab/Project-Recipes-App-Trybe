@@ -9,6 +9,7 @@ import Header from '../components/Header';
 
 function Foods({ match: { path } }) {
   const { data: { recipes } } = useContext(RecipesContext);
+
   const history = useHistory();
 
   const redirectRecipies = useCallback(() => {
@@ -18,7 +19,7 @@ function Foods({ match: { path } }) {
     }
     if (recipes.length === 1) {
       history.push(`/comidas/${recipes[0].idMeal}`);
-    } else if (recipes.length > 1) {
+    } else {
       return <RecipesCardFood />;
     }
   }, [recipes, history]);
