@@ -8,7 +8,7 @@ function FoodsDetails({ match: { params: { id } } }) {
   const [recipe, getRecipe] = useState({});
   const [loading, setLoading] = useState(false);
   const API_BY_ID = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=';
-  
+
   useEffect(() => {
     async function getRecipeById() {
       const { meals } = await fetch(`${API_BY_ID}${id}`)
@@ -46,15 +46,16 @@ function FoodsDetails({ match: { params: { id } } }) {
           <p data-testid="recipe-category">{recipe.strCategory}</p>
           <p>Ingredientes:</p>
           <ul>
-            {ingredients.map((ingredient, index) => <li key={ index }>{ingredient}</li>)}
+            {ingredients.map((ingredient, index) => <li key={ index } data-testid={`${index}-ingredient-name-and-measure`}>{ingredient}</li>)}
           </ul>
           <p data-testid="instructions">{recipe.strInstructions}</p>
-          <video src={ recipe.strYoutube } width="450" controls>
+          <video src={ recipe.strYoutube } width="450" controls data-testid="video">
             <track kind="captions" />
             Seu navegador não suporta o elemento
           </video>
-          <span>Receitas Recomendadas</span>
-          <Button data-testid="start-recipe-btn">Iniciar Receita</Button>
+          <span data-testid="0-recomendation-card">Receitas Recomendadas</span>
+          {/* Não tenho noção do que é esse card de recomendação */}
+          <Button testid="start-recipe-btn" label="Iniciar receita" />
           <ShareIcon />
           <FavoriteIcon />
           </div>) : 'loading'}

@@ -38,20 +38,21 @@ function DrinksDetails({ match: { params: { id } } }) {
       <div>
         {loading ? (
           <div>
-          <h1 data-testid="drink-title">{drink.strDrink}</h1>
+          <h1 data-testid="recipe-title">{drink.strDrink}</h1>
           <img
-            data-testid="drink-photo"
+            data-testid="recipe-photo"
             src={ drink.strDrinkThumb }
             alt={ drink.strDrink }
           />
-          <p data-testid="drink-category">{drink.strCategory}</p>
+          <p data-testid="recipe-category">{drink.strAlcoholic}</p>
           <p>Ingredientes:</p>
           <ul>
-            {ingredients.map((ingredient, index) => <li key={ index }>{ingredient}</li>)}
+            {ingredients.map((ingredient, index) => <li key={ index } data-testid={`${index}-ingredient-name-and-measure`}>{ingredient}</li>)}
           </ul>
           <p data-testid="instructions">{drink.strInstructions}</p>
-          <span>Receitas Recomendadas</span>
-          <Button data-testid="start-drink-btn">Iniciar Receita</Button>
+          <span data-testid="0-recomendation-card">Receitas Recomendadas</span>
+          {/* Não tenho noção do que é esse card de recomendação */}
+          <Button testid="start-recipe-btn" label="Iniciar receita" />
           <ShareIcon />
           <FavoriteIcon />
           </div>) : 'loading'}
