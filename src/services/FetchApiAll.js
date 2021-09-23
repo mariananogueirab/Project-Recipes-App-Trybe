@@ -1,5 +1,5 @@
-const API_BY_ALL_DRINKS = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail';
-const API_BY_ALL_FOODS = 'https://www.themealdb.com/api/json/v1/1/filter.php?c=Seafood';
+const API_BY_ALL_DRINKS = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+const API_BY_ALL_FOODS = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
 const API_DRINK_BY_ID = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=';
 const API_FOODS_RECOMENDATION = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
 const API_FOOD_BY_ID = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=';
