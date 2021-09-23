@@ -4,8 +4,11 @@ function DrinkInProgress() {
   const ingredients = ['Ingr 1', 'Ingr 2', 'Ingr 3'];
 
   const ingredientsList = ingredients.map((ingredient, index) => (
-    <li key={ ingredient } data-testid={ `${index}-ingredient-step}` }>
-      <input type="checkbox" name={ ingredient } />
+    <li key={ ingredient } data-testid={ `${index}-ingredient-step` }>
+      <div>
+        <input type="checkbox" name={ ingredient } />
+        <p>{ ingredient }</p>
+      </div>
     </li>
   ));
 
@@ -29,6 +32,7 @@ function DrinkInProgress() {
       {/* Criar um componente Instructions */}
       <div data-testid="instructions">
         {/* texto com as instruções vem aqui */}
+        <h3>Instructions</h3>
         <section>
           texto com as instruções da receita
         </section>
