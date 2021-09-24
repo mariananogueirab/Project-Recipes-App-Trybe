@@ -21,21 +21,9 @@ function RecipesProvider({ children }) {
     setSelected((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const [profile, setProfile] = useState({
-    user: {
-      email: '',
-    },
-  });
-
-  const handleSetProfile = (user) => {
-    setProfile((prevState) => ({ ...prevState, user }));
-  };
-
   const contextValue = {
     data,
     selected,
-    profile,
-    handleSetProfile,
     setSearchRecipes,
     handleChangeSearch,
   };

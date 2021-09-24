@@ -1,8 +1,7 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import Button from '../components/Button';
 import Input from '../components/Input';
-import RecipesContext from '../context/RecipesContext';
 
 function Login() {
   const [login, setLogin] = useState({
@@ -11,8 +10,6 @@ function Login() {
   }); // Criei um estado local, porque ainda não tem nada sobre estado global.
   const [enableButton, setEnable] = useState(true); // o botão tem que estar desabilitado caso as validações do email e senha não passem, então criei um estado, foi a maneira que consegui.
   const history = useHistory(); // só jogando o hook useHistory em uma constante pra pegar o histórico
-
-  const { handleSetProfile } = useContext(RecipesContext);
 
   function handleValidation() { // valida o email e a senha
     const emailPath = /^[^\s@]+@[^\s@]+\.[^\s@]+$/g; // regex retirado de projetos anteriores.
@@ -26,7 +23,6 @@ function Login() {
     const user = {
       email: login.email,
     };
-    handleSetProfile(user);
     localStorage.setItem('user', JSON.stringify(user));
     localStorage.setItem('mealsToken', JSON.stringify(1));
     localStorage.setItem('cocktailsToken', JSON.stringify(1));
