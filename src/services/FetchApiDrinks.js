@@ -31,17 +31,17 @@ async function getApiByFirstLetter(firstLetter, callback) {
   }
 }
 
-function FetchApiDrinks(searchText, searchRadio, setSearchFood) {
+function FetchApiDrinks(searchText, searchRadio, setSearchRecipes) {
   switch (searchRadio) {
   case 'ingredient':
-    getApiByIngrediente(searchText, setSearchFood);
+    getApiByIngrediente(searchText, setSearchRecipes);
     break;
   case 'name':
-    getApiByName(searchText, setSearchFood);
+    getApiByName(searchText, setSearchRecipes);
     break;
   case 'first-letter':
     if (searchText.length === 1) {
-      getApiByFirstLetter(searchText, setSearchFood);
+      getApiByFirstLetter(searchText, setSearchRecipes);
     } else {
       global.alert('Sua busca deve conter somente 1 (um) caracter');
     }

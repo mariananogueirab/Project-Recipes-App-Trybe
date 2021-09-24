@@ -8,15 +8,15 @@ function SearchBar({ path }) {
   const { handleChangeSearch } = useContext(RecipesContext);
   const {
     selected: { searchText, searchRadio },
-    setSearchFood } = useContext(RecipesContext);
+    setSearchRecipes } = useContext(RecipesContext);
   /* submete o reultado da busca e faz a requisição da api salvando no state global */
   const handleClick = (event) => {
     event.preventDefault();
 
     if (path === '/comidas') {
-      FetchApiFoods(searchText, searchRadio, setSearchFood);
+      FetchApiFoods(searchText, searchRadio, setSearchRecipes);
     } else if (path === '/bebidas') {
-      FetchApiDrinks(searchText, searchRadio, setSearchFood);
+      FetchApiDrinks(searchText, searchRadio, setSearchRecipes);
     }
   };
 
