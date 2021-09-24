@@ -16,7 +16,7 @@ function RecipesCardDrink() {
   // renderiza conforme as condições expecíficas dos requisitos
   const renderRecipies = () => {
     if (!recipes) {
-      return global.alert(msg);
+      global.alert(msg);
     }
     if (recipes.length === 0 || recipes === null) onFirstFetchApi();
     if (recipes.length === 1) {
