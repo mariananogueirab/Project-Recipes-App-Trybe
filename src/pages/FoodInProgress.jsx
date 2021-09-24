@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
@@ -62,7 +62,7 @@ function FoodInProgress() {
   };
 
   // função para favoritar receita. Coloquei um dado estático para passar nos testes
-  const favoriteRecipe = useMemo(() => {
+  const favoriteRecipe = useCallback(() => {
     if (!favorited) {
       const favoriteRecipes = [{
         id: '52771',
@@ -80,10 +80,6 @@ function FoodInProgress() {
       setFavorited(false);
     }
   }, [favorited]);
-
-  useEffect(() => {
-    favoriteRecipe();
-  }, [favoriteRecipe]);
 
   return (
     <div>
