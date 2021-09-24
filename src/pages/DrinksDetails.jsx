@@ -4,6 +4,7 @@ import ShareIcon from '../components/ShareIcon';
 import FavoriteIcon from '../components/FavoriteIcon';
 import Button from '../components/Button';
 import { getDrinkById, getFoodsRecomendation } from '../services/FetchApiAll';
+import RecommendationCard from '../components/RecommendationCard';
 
 function DrinksDetails() {
   const [drink, getDrink] = useState({});
@@ -11,8 +12,6 @@ function DrinksDetails() {
   const [loading, setLoading] = useState(false);
   const INDEX_ID = 9;
   const id = useHistory().location.pathname.slice(INDEX_ID);
-
-  console.log(foodsRecomendations);
 
   useEffect(() => { // faz a requisição pra api pelo id
     async function getDrinks() {
@@ -25,8 +24,9 @@ function DrinksDetails() {
 
   useEffect(() => { // faz a requisição pra api da recomendação de comidas
     async function getFoodsRecom() {
+      const NUM_OF_RECOMMENDATIONS = 6;
       const meals = await getFoodsRecomendation();
-      setFoodsRecomendations(meals);
+      setFoodsRecomendations(meals.splice(0, NUM_OF_RECOMMENDATIONS));
     }
     getFoodsRecom();
   }, []);
@@ -76,7 +76,7 @@ function DrinksDetails() {
                 </li>))}
           </ul>
           <p data-testid="instructions">{drink.strInstructions}</p>
-          <span data-testid="0-recomendation-card">Receitas Recomendadas</span>
+          <RecommendationCard recommendations={ foodsRecomendations } />
           <Button testid="start-recipe-btn" label="Iniciar receita" />
           <ShareIcon />
           <FavoriteIcon />

@@ -4,6 +4,7 @@ import ShareIcon from '../components/ShareIcon';
 import FavoriteIcon from '../components/FavoriteIcon';
 import Button from '../components/Button';
 import { getFoodById, getDrinksRecomendation } from '../services/FetchApiAll';
+import RecommendationCard from '../components/RecommendationCard';
 
 function FoodsDetails() {
   const [recipe, getRecipe] = useState({});
@@ -11,8 +12,6 @@ function FoodsDetails() {
   const [loading, setLoading] = useState(false);
   const INDEX_ID = 9;
   const id = useHistory().location.pathname.slice(INDEX_ID);
-
-  console.log(drinksRecomendations);
 
   useEffect(() => { // faz a requisição pra api pelo id, o requisito pede
     async function getRecipeById() {
@@ -25,8 +24,9 @@ function FoodsDetails() {
 
   useEffect(() => { // faz a requisição pra api da recomendação de drinks
     async function getDrinksRecom() {
-      const drinks = getDrinksRecomendation();
-      setDrinksRecomendations(drinks);
+      const NUM_OF_RECOMMENDATIONS = 6;
+      const drinks = await getDrinksRecomendation();
+      setDrinksRecomendations(drinks.splice(0, NUM_OF_RECOMMENDATIONS));
     }
     getDrinksRecom();
   }, []);
@@ -80,7 +80,7 @@ function FoodsDetails() {
             <track kind="captions" />
             Seu navegador não suporta o elemento
           </video>
-          <span data-testid="0-recomendation-card">Receitas Recomendadas</span>
+          <RecommendationCard recommendations={ drinksRecomendations } />
           <Button testid="start-recipe-btn" label="Iniciar receita" />
           <ShareIcon />
           <FavoriteIcon />
