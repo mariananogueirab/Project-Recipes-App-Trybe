@@ -17,9 +17,14 @@ function Button({ testid, disabled, onClick, label }) {
 
 Button.propTypes = {
   testid: PropTypes.string.isRequired,
-  disabled: PropTypes.bool.isRequired,
-  onClick: PropTypes.func.isRequired,
   label: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
+  onClick: PropTypes.func,
+};
+
+Button.defaultProps = {
+  disabled: undefined,
+  onClick: undefined,
 };
 
 export default Button;

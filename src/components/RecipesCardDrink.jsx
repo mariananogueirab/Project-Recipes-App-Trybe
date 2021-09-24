@@ -1,46 +1,50 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import RecipesContext from '../context/RecipesContext';
 import { getApiByAllDrinks } from '../services/FetchApiAll';
 
 function RecipesCardDrink() {
-  const { data: { recipes }, setSearchRecipes } = useContext(RecipesContext);
+  const [drinksAll, setDrinksAll] = useState([]);
+  const { data: { recipes } } = useContext(RecipesContext);
   const history = useHistory();
   const number = 12;
   const msg = 'Sinto muito, não encontramos nenhuma receita para esses filtros.';
-  // faz a primeira requsição a api para renderizar as opções iniciais
-  const onFirstFetchApi = async () => {
-    const allDrinks = await getApiByAllDrinks();
-    setSearchRecipes(allDrinks.drinks);
-  };
+
   // renderiza conforme as condições expecíficas dos requisitos
   const renderRecipies = () => {
     if (!recipes) {
-      return global.alert(msg);
+      global.alert(msg);
+      return drinksAll;
     }
-    if (recipes.length === 0 || recipes === null) onFirstFetchApi();
     if (recipes.length === 1) {
       history.push(`/bebidas/${recipes[0].idDrink}`);
     }
-    return (
-      recipes.map(({ idDrink, strDrink, strDrinkThumb }, index) => (
-        <div
-          data-testid={ `${index}-recipe-card` }
-          key={ idDrink }
-        >
-          <img
-            data-testid={ `${index}-card-img` }
-            src={ strDrinkThumb }
-            alt={ strDrink }
-          />
-          <h2 data-testid={ `${index}-card-name` }>{ strDrink }</h2>
-        </div>
-      )).slice(0, number)
-    );
+    if (recipes.length > 0) return recipes;
+    if (recipes.length === 0) return drinksAll;
   };
 
+  useEffect(() => { // faz a requisição pra api de bebidas sem filtros
+    async function getDrinksAll() {
+      const drinks = await getApiByAllDrinks();
+      setDrinksAll(drinks);
+    }
+    getDrinksAll();
+  }, []);
+
   return (
-    renderRecipies()
+    renderRecipies().map(({ idDrink, strDrink, strDrinkThumb }, index) => (
+      <div
+        data-testid={ `${index}-recipe-card` }
+        key={ idDrink }
+      >
+        <img
+          data-testid={ `${index}-card-img` }
+          src={ strDrinkThumb }
+          alt={ strDrink }
+        />
+        <h2 data-testid={ `${index}-card-name` }>{ strDrink }</h2>
+      </div>
+    )).slice(0, number)
   );
 }
 
