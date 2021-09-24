@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
@@ -7,6 +8,7 @@ function FoodInProgress() {
   const [checkedItems, setCheckedItems] = useState([]);
   const [copied, setCopied] = useState(false);
   const [favorited, setFavorited] = useState(false);
+  const history = useHistory();
   const ingredients = ['Ingr 1', 'Ingr 2', 'Ingr 3', 'Ingr 4', 'Ingr 5', 'Ingr 6',
     'Ingr 7', 'Ingr 8'];
 
@@ -62,7 +64,8 @@ function FoodInProgress() {
   };
 
   // função para favoritar receita. Coloquei um dado estático para passar nos testes
-  const favoriteRecipe = useCallback(() => {
+  const favoriteRecipe = () => {
+    console.log('dentro da função');
     if (!favorited) {
       const favoriteRecipes = [{
         id: '52771',
@@ -79,7 +82,11 @@ function FoodInProgress() {
       localStorage.clear('favoriteRecipes');
       setFavorited(false);
     }
-  }, [favorited]);
+  };
+
+  const handleCompleteRecipe = () => {
+    history.push('/receitas-feitas');
+  };
 
   return (
     <div>
@@ -118,7 +125,11 @@ function FoodInProgress() {
           texto com as instruções da receita
         </section>
       </div>
-      <button type="button" data-testid="finish-recipe-btn">
+      <button
+        type="button"
+        data-testid="finish-recipe-btn"
+        onClick={ handleCompleteRecipe }
+      >
         Finalizar Receita
       </button>
     </div>

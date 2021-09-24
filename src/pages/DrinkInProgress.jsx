@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router';
 
 function DrinkInProgress() {
   const [copied, setCopied] = useState(false);
+  const history = useHistory();
   const ingredients = ['Ingr 1', 'Ingr 2', 'Ingr 3'];
 
   const ingredientsList = ingredients.map((ingredient, index) => (
@@ -19,6 +21,10 @@ function DrinkInProgress() {
     // window.location.href = 'http://localhost:3000/bebidas/178319';
     navigator.clipboard.writeText('http://localhost:3000/bebidas/178319');
     setCopied(true);
+  };
+
+  const handleCompleteRecipe = () => {
+    history.push('/receitas-feitas');
   };
 
   return (
@@ -52,7 +58,11 @@ function DrinkInProgress() {
           texto com as instruções da receita
         </section>
       </div>
-      <button type="button" data-testid="finish-recipe-btn">
+      <button
+        type="button"
+        data-testid="finish-recipe-btn"
+        onClick={ handleCompleteRecipe }
+      >
         Finalizar Receita
       </button>
     </div>
