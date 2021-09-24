@@ -8,7 +8,7 @@ function RecipesProvider({ children }) {
     isLoading: false,
   });
 
-  const setSearchFood = (search) => {
+  const setSearchRecipes = (search) => {
     setdata((prevState) => ({ ...prevState, recipes: search, isLoading: true }));
   };
 
@@ -21,10 +21,22 @@ function RecipesProvider({ children }) {
     setSelected((prevState) => ({ ...prevState, [name]: value }));
   };
 
+  const [profile, setProfile] = useState({
+    user: {
+      email: '',
+    },
+  });
+
+  const handleSetProfile = (user) => {
+    setProfile((prevState) => ({ ...prevState, user }));
+  };
+
   const contextValue = {
     data,
     selected,
-    setSearchFood,
+    profile,
+    handleSetProfile,
+    setSearchRecipes,
     handleChangeSearch,
   };
 
