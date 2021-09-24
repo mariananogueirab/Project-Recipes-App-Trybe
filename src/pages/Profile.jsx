@@ -1,18 +1,25 @@
-import React, { useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import RecipesContext from '../context/RecipesContext';
 
 function Profile() {
-  const { profile } = useContext(RecipesContext);
   const history = useHistory();
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    const userLocal = localStorage.getItem('user');
+    if (userLocal) {
+      setUser(JSON.parse(userLocal));
+    }
+  }, []);
+
   return (
     <main>
       <Header pageTitle="Perfil" hasSearchIcon={ false } />
       <h2 data-testid="profile-email">
-        { profile.user.email }
+        { user.email }
       </h2>
       <button
         data-testid="profile-done-btn"
