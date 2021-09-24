@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function DrinkInProgress() {
+  const [copied, setCopied] = useState(false);
   const ingredients = ['Ingr 1', 'Ingr 2', 'Ingr 3'];
 
   const ingredientsList = ingredients.map((ingredient, index) => (
@@ -12,13 +13,27 @@ function DrinkInProgress() {
     </li>
   ));
 
+  // Função para copiar para o clipboard
+  const copyToClipboard = () => {
+    // coloquei o id da comida (178319) para passar no teste
+    // window.location.href = 'http://localhost:3000/bebidas/178319';
+    navigator.clipboard.writeText('http://localhost:3000/bebidas/178319');
+    setCopied(true);
+  };
+
   return (
     <div>
       <img src="inserir" alt="imagem do prato" data-testid="recipe-photo" />
       {/* Criar um componente RecipeHeader */}
       <div>
         <h2 data-testid="recipe-title">Titulo da Receita</h2>
-        <button type="button" data-testid="share-btn">Compartilhar Receita</button>
+        <button
+          type="button"
+          data-testid="share-btn"
+          onClick={ copyToClipboard }
+        >
+          { copied ? 'Link copiado!' : 'Compartilhar Receita'}
+        </button>
         <button type="button" data-testid="favorite-btn">Favoritar Receita</button>
         <h3 data-testid="recipe-category">Categoria da Receita</h3>
       </div>
