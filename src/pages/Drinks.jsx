@@ -4,6 +4,7 @@ import { useHistory } from 'react-router';
 import SearchBar from '../components/SearchBar';
 import Footer from '../components/Footer';
 import RecipesContext from '../context/RecipesContext';
+import RecipesCardFood from '../components/RecipesCardFood';
 import RecipesCardDrink from '../components/RecipesCardDrink';
 import Header from '../components/Header';
 
@@ -26,6 +27,7 @@ function Drinks({ match: { path } }) {
     <div>
       <Header pageTitle="Bebidas" hasSearchIcon="active" />
       <SearchBar path={ path } />
+      <RecipesCardFood />
       {
         redirectRecipies()
       }

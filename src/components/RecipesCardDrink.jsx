@@ -2,7 +2,7 @@
 import React, { useContext } from 'react';
 import RecipesContext from '../context/RecipesContext';
 
-function RecipesCardFood() {
+function RecipesCardDrink() {
   const { data: { recipes } } = useContext(RecipesContext);
   const number = 12;
   return (
@@ -27,4 +27,4 @@ function RecipesCardFood() {
   );
 }
 
-export default RecipesCardFood;
+export default RecipesCardDrink;
