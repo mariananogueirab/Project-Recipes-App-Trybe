@@ -4,35 +4,41 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
 function FoodInProgress() {
-  // const [localFood, setLocalFood] = useState({ meals: { foodID: [] } });
-  const [checkedItems, setCheckedItems] = useState([]);
-  const [copied, setCopied] = useState(false);
-  const [favorited, setFavorited] = useState(false);
-  const history = useHistory();
   const ingredients = ['Ingr 1', 'Ingr 2', 'Ingr 3', 'Ingr 4', 'Ingr 5', 'Ingr 6',
     'Ingr 7', 'Ingr 8'];
 
-  const toggleCheckBoxChange = ({ target }) => {
-    const localItens = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    const { meals: { foodID } } = localItens;
-    console.log('array localStorage foodID:', foodID);
+  const newIngredients = ingredients.reduce((acc, value) => {
+    acc = [...acc, { ingredient: value, checked: false }];
+    return acc;
+  }, []);
 
-    setCheckedItems((prevState) => [...prevState, target.checked]);
-    // console.log('estado localFood:', localFood);
-    // localStorage.setItem('inProgressRecipes', JSON.stringify(newObj));
-    // setCheckedItems(newObj);
-    console.log(target.id, target.checked);
+  const [localFood, setLocalFood] = useState(newIngredients);
+
+  const [copied, setCopied] = useState(false);
+  const [favorited, setFavorited] = useState(false);
+  const history = useHistory();
+
+  console.log(newIngredients);
+
+  const toggleCheckBoxChange = ({ target }) => {
+    if (localFood.find(({ ingredient }) => ingredient === target.name)) {
+      setLocalFood(localFood.map((objct) => {
+        if (objct.ingredient === target.name) {
+          objct.checked = !objct.checked;
+        }
+        return objct;
+      }));
+    }
   };
 
-  console.log('checkedItems', checkedItems);
+  const ingredientsList = localFood.map(({ ingredient, checked }, index) => (
 
-  const ingredientsList = ingredients.map((ingredient, index) => (
     <li key={ ingredient } data-testid={ `${index}-ingredient-step` }>
       <div>
         <input
           type="checkbox"
           id={ index }
-          // checked={ checked }
+          checked={ checked }
           name={ ingredient }
           onChange={ toggleCheckBoxChange }
         />
@@ -52,8 +58,20 @@ function FoodInProgress() {
       },
     };
 
-    localStorage.setItem('inProgressRecipes', JSON.stringify(obj));
+    const foodProgressLocal = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (foodProgressLocal) {
+      setLocalFood(foodProgressLocal.meals.foodID);
+    } else {
+      localStorage.setItem('inProgressRecipes', JSON.stringify(obj));
+    }
   }, []);
+
+  useEffect(() => {
+    const foodProgressLocal = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    localStorage.setItem('inProgressRecipes', JSON.stringify({
+      ...foodProgressLocal,
+      meals: { foodID: localFood } }));
+  }, [localFood]);
 
   // Função para copiar para o clipboard
   const copyToClipboard = () => {
