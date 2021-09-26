@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
-function FoodInProgress() {
+function FoodInProgress(props) {
   const ingredients = ['Ingr 1', 'Ingr 2', 'Ingr 3', 'Ingr 4', 'Ingr 5', 'Ingr 6',
     'Ingr 7', 'Ingr 8'];
 
@@ -17,8 +17,6 @@ function FoodInProgress() {
   const [copied, setCopied] = useState(false);
   const [favorited, setFavorited] = useState(false);
   const history = useHistory();
-
-  console.log(newIngredients);
 
   const toggleCheckBoxChange = ({ target }) => {
     if (localFood.find(({ ingredient }) => ingredient === target.name)) {
@@ -38,9 +36,10 @@ function FoodInProgress() {
         <input
           type="checkbox"
           id={ index }
-          checked={ checked }
+          defaultChecked={ checked ? 'checked' : false }
+          // checked={ checked }
           name={ ingredient }
-          onChange={ toggleCheckBoxChange }
+          onClick={ toggleCheckBoxChange }
         />
         <p>{ ingredient }</p>
       </div>
