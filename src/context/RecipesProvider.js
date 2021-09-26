@@ -8,7 +8,7 @@ function RecipesProvider({ children }) {
     isLoading: false,
   });
 
-  const setSearchFood = (search) => {
+  const setSearchRecipes = (search) => {
     setdata((prevState) => ({ ...prevState, recipes: search, isLoading: true }));
   };
 
@@ -24,7 +24,7 @@ function RecipesProvider({ children }) {
   const contextValue = {
     data,
     selected,
-    setSearchFood,
+    setSearchRecipes,
     handleChangeSearch,
   };
 
