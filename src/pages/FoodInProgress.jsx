@@ -38,7 +38,7 @@ function FoodInProgress() {
       localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
       setFavorited(true);
     } else {
-      localStorage.clear('favoriteRecipes');
+      localStorage.removeItem('favoriteRecipes');
       setFavorited(false);
     }
   };
