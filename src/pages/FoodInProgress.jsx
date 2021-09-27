@@ -1,76 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router';
+import useCheckedFoods from '../hooks/useCheckedFoods';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
-function FoodInProgress(props) {
+function FoodInProgress() {
   const ingredients = ['Ingr 1', 'Ingr 2', 'Ingr 3', 'Ingr 4', 'Ingr 5', 'Ingr 6',
     'Ingr 7', 'Ingr 8'];
-
-  const newIngredients = ingredients.reduce((acc, value) => {
-    acc = [...acc, { ingredient: value, checked: false }];
-    return acc;
-  }, []);
-
-  const [localFood, setLocalFood] = useState(newIngredients);
 
   const [copied, setCopied] = useState(false);
   const [favorited, setFavorited] = useState(false);
   const history = useHistory();
 
-  const toggleCheckBoxChange = ({ target }) => {
-    if (localFood.find(({ ingredient }) => ingredient === target.name)) {
-      setLocalFood(localFood.map((objct) => {
-        if (objct.ingredient === target.name) {
-          objct.checked = !objct.checked;
-        }
-        return objct;
-      }));
-    }
-  };
-
-  const ingredientsList = localFood.map(({ ingredient, checked }, index) => (
-
-    <li key={ ingredient } data-testid={ `${index}-ingredient-step` }>
-      <div>
-        <input
-          type="checkbox"
-          id={ index }
-          defaultChecked={ checked ? 'checked' : false }
-          // checked={ checked }
-          name={ ingredient }
-          onClick={ toggleCheckBoxChange }
-        />
-        <p>{ ingredient }</p>
-      </div>
-    </li>
-  ));
-
-  // localStorage inicial para os itens checked
-  useEffect(() => {
-    const obj = {
-      cocktails: {
-        cocktailID: [],
-      },
-      meals: {
-        foodID: [],
-      },
-    };
-
-    const foodProgressLocal = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (foodProgressLocal) {
-      setLocalFood(foodProgressLocal.meals.foodID);
-    } else {
-      localStorage.setItem('inProgressRecipes', JSON.stringify(obj));
-    }
-  }, []);
-
-  useEffect(() => {
-    const foodProgressLocal = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    localStorage.setItem('inProgressRecipes', JSON.stringify({
-      ...foodProgressLocal,
-      meals: { foodID: localFood } }));
-  }, [localFood]);
+  const ingredientsList = useCheckedFoods(ingredients);
 
   // Função para copiar para o clipboard
   const copyToClipboard = () => {
