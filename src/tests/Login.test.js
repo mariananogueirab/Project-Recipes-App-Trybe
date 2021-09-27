@@ -8,7 +8,7 @@ describe('Testes Login.jsx', () => {
   const inputEmailId = 'email-input';
   const inputPasswordId = 'password-input';
   const buttonId = 'login-submit-btn';
-  const email = 'email@test.com';
+  const email = 'email@mail.com';
   test('ao entrar na página contém todos os elementos data-testid especificos', () => {
     renderWithRouter(
       <App />,

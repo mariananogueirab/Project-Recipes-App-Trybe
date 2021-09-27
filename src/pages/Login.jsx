@@ -14,12 +14,12 @@ function Login() {
     function handleValidation() { // valida o email e a senha
       const emailPath = /^[^\s@]+@[^\s@]+\.[^\s@]+$/g; // regex retirado de projetos anteriores.
       const MIN_LENGTH_PSSW = 6;
-      if (emailPath.test(login.email) && login.password.length >= MIN_LENGTH_PSSW) {
+      if (emailPath.test(login.email) && login.password.length > MIN_LENGTH_PSSW) {
         setEnable((prevState) => !prevState);
       }
     }
     handleValidation();
-  }, [login.email, login.password]);
+  }, [login.email, login.password]); /// BUG
   function handleButtonLogin() {
     const user = {
       email: login.email,
@@ -29,7 +29,6 @@ function Login() {
     localStorage.setItem('cocktailsToken', JSON.stringify(1));
     history.push('/comidas'); // redirecionando pra página de comidas
   }
-
   return (
     <div>
       <Input
@@ -40,7 +39,6 @@ function Login() {
           setLogin({ ...login, email: target.value });
         } }
       />
-
       <Input
         type="password"
         testid="password-input"
@@ -49,7 +47,6 @@ function Login() {
           setLogin({ ...login, password: target.value });
         } }
       />
-
       <Button
         testid="login-submit-btn"
         disabled={ enableButton }
@@ -59,5 +56,4 @@ function Login() {
     </div>
   );
 }
-
 export default Login;
