@@ -26,8 +26,8 @@ function useCheckedDrinks(ingredients) {
         <input
           type="checkbox"
           id={ index }
-          // defaultChecked={ checked ? 'checked' : false }
-          checked={ checked }
+          defaultChecked={ checked ? 'checked' : false }
+          // checked={ checked }
           name={ ingredient }
           onClick={ toggleCheckBoxChange }
         />
@@ -57,6 +57,7 @@ function useCheckedDrinks(ingredients) {
 
   useEffect(() => {
     const foodProgressLocal = JSON.parse(localStorage.getItem('inProgressRecipes'));
+
     localStorage.setItem('inProgressRecipes', JSON.stringify({
       ...foodProgressLocal,
       cocktails: { cocktailID: localDrink } }));
