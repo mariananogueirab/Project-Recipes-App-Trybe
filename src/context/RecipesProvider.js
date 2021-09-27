@@ -21,11 +21,18 @@ function RecipesProvider({ children }) {
     setSelected((prevState) => ({ ...prevState, [name]: value }));
   };
 
+  const [recipesMade, setRecipesMade] = useState({
+    foods: [], // colocar os ids
+    drinks: [],
+  });
+
   const contextValue = {
     data,
     selected,
     setSearchRecipes,
     handleChangeSearch,
+    recipesMade,
+    setRecipesMade,
   };
 
   return (

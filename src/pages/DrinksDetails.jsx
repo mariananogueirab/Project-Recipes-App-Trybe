@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import ShareIcon from '../components/ShareIcon';
 import FavoriteIcon from '../components/FavoriteIcon';
 import Button from '../components/Button';
 import { getDrinkById, getFoodsRecomendation } from '../services/FetchApiAll';
 import RecommendationCard from '../components/RecommendationCard';
+import '../styles/recommendationCard.css';
+import RecipesContext from '../context/RecipesContext';
 
 function DrinksDetails() {
   const [drink, getDrink] = useState({});
   const [foodsRecomendations, setFoodsRecomendations] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [recipeMade, setRecipeMade] = useState(false);
+  /* const { contextValue: { recipesMade } } = useContext(RecipesContext); */
   const INDEX_ID = 9;
   const id = useHistory().location.pathname.slice(INDEX_ID);
 
@@ -20,7 +24,10 @@ function DrinksDetails() {
       setLoading(true);
     }
     getDrinks();
-  }, [id]);
+    /* if (recipesMade.foods.some((food) => food === id)) {
+      setRecipeMade(true);
+    } */
+  }, [id, /* recipesMade.foods */]);
 
   useEffect(() => { // faz a requisição pra api da recomendação de comidas
     async function getFoodsRecom() {
@@ -77,7 +84,12 @@ function DrinksDetails() {
           </ul>
           <p data-testid="instructions">{drink.strInstructions}</p>
           <RecommendationCard recommendations={ foodsRecomendations } />
-          <Button testid="start-recipe-btn" label="Iniciar receita" />
+          <Button
+            testid="start-recipe-btn"
+            label="Iniciar receita"
+            className="buttonFixed" // requisito pede que o botão seja fixo lá embaixo
+            disabled={ recipeMade }
+          />
           <ShareIcon />
           <FavoriteIcon />
         </div>) : 'loading'}
