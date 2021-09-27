@@ -13,11 +13,11 @@ function FoodsDetails() {
   const [drinksRecomendations, setDrinksRecomendations] = useState([]);
   const [loading, setLoading] = useState(false);
   const [recipeMade, setRecipeMade] = useState(false);
- /*  const { contextValue } = useContext(RecipesContext);
-  const { recipesMade } = contextValue; */
+  /* const contextValue = useContext(RecipesContext); */
+  /* const { recipesMade } = contextValue; */
   const INDEX_ID = 9;
   const id = useHistory().location.pathname.slice(INDEX_ID);
-
+  /* console.log(recipesMade) */
   useEffect(() => { // faz a requisição pra api pelo id, o requisito pede
     async function getRecipeById() {
       const meals = await getFoodById(id);
@@ -32,9 +32,8 @@ function FoodsDetails() {
 
   useEffect(() => { // faz a requisição pra api da recomendação de drinks
     async function getDrinksRecom() {
-      const NUM_OF_RECOMMENDATIONS = 6;
       const drinks = await getDrinksRecomendation();
-      setDrinksRecomendations(drinks.splice(0, NUM_OF_RECOMMENDATIONS));
+      setDrinksRecomendations(drinks);
     }
     getDrinksRecom();
   }, []);

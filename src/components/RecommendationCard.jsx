@@ -5,9 +5,11 @@ import '../styles/recommendationCard.css';
 
 function RecommendationCard({ recommendations }) {
   const type = useHistory().location.pathname.includes('comida') ? 'Drink' : 'Meal'; // isso é pra pegar parte da rota, pra ver se é de comida ou bebida. Pra fazer um componente só, dinâmico, pros dois.
+  const NUM_OF_RECOMMENDATIONS = 6;
+  const recipesRecom = recommendations.splice(0, NUM_OF_RECOMMENDATIONS);
 
   function renderCard() {
-    return recommendations.map((recommendation, index) => (
+    return recipesRecom.map((recommendation, index) => (
       <div key={ index } className="card" data-testid={ `${index}-recomendation-card` }>
         <img
           src={ recommendation[`str${type}Thumb`] }

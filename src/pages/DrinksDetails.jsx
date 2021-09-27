@@ -31,9 +31,8 @@ function DrinksDetails() {
 
   useEffect(() => { // faz a requisição pra api da recomendação de comidas
     async function getFoodsRecom() {
-      const NUM_OF_RECOMMENDATIONS = 6;
       const meals = await getFoodsRecomendation();
-      setFoodsRecomendations(meals.splice(0, NUM_OF_RECOMMENDATIONS));
+      setFoodsRecomendations(meals);
     }
     getFoodsRecom();
   }, []);
