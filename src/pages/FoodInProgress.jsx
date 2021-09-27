@@ -1,75 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router';
+import useCheckedFoods from '../hooks/useCheckedFoods';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
 function FoodInProgress() {
-  const [localFood, setLocalFood] = useState([]);
-
-  const [checked, setChecked] = useState(false);
+  const ingredients = ['Ingr 1', 'Ingr 2', 'Ingr 3', 'Ingr 4', 'Ingr 5', 'Ingr 6',
+    'Ingr 7', 'Ingr 8'];
 
   const [copied, setCopied] = useState(false);
   const [favorited, setFavorited] = useState(false);
   const history = useHistory();
-  const ingredients = ['Ingr 1', 'Ingr 2', 'Ingr 3', 'Ingr 4', 'Ingr 5', 'Ingr 6',
-    'Ingr 7', 'Ingr 8'];
 
-  const toggleCheckBoxChange = ({ target }) => {
-    setChecked(!checked);
-
-    // const newState = localFood.meals.foodID.map((item) => {
-    //   if (item.ingredient === target.name) {
-    //     item.checked = checked;
-    //     return item;
-    //   } return item;
-    // });
-
-    // console.log(newState);
-
-    setLocalFood((prevState) => ([...prevState, { ingredient: target.name, checked }]));
-    // console.log(target.checked);
-  };
-
-  const ingredientsList = ingredients.map((ingredient, index) => (
-    <li key={ ingredient } data-testid={ `${index}-ingredient-step` }>
-      <div>
-        <input
-          type="checkbox"
-          id={ index }
-          // checked={ checked }
-          name={ ingredient }
-          onChange={ toggleCheckBoxChange }
-        />
-        <p>{ ingredient }</p>
-      </div>
-    </li>
-  ));
-
-  // localStorage inicial para os itens checked
-  useEffect(() => {
-    const obj = {
-      cocktails: {
-        cocktailID: [],
-      },
-      meals: {
-        foodID: [],
-      },
-    };
-
-    const foodProgressLocal = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (foodProgressLocal) {
-      setLocalFood(foodProgressLocal.meals.foodID);
-    } else {
-      localStorage.setItem('inProgressRecipes', JSON.stringify(obj));
-    }
-  }, []);
-
-  useEffect(() => {
-    const foodProgressLocal = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    localStorage.setItem('inProgressRecipes', JSON.stringify({
-      ...foodProgressLocal,
-      meals: { foodID: localFood } }));
-  }, [localFood]);
+  const ingredientsList = useCheckedFoods(ingredients);
 
   // Função para copiar para o clipboard
   const copyToClipboard = () => {
@@ -95,7 +38,7 @@ function FoodInProgress() {
       localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
       setFavorited(true);
     } else {
-      localStorage.clear('favoriteRecipes');
+      localStorage.removeItem('favoriteRecipes');
       setFavorited(false);
     }
   };

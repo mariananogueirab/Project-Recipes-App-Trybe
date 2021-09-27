@@ -1,19 +1,13 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
+import useCheckedDrinks from '../hooks/useCheckedDrinks';
 
 function DrinkInProgress() {
   const [copied, setCopied] = useState(false);
   const history = useHistory();
   const ingredients = ['Ingr 1', 'Ingr 2', 'Ingr 3'];
 
-  const ingredientsList = ingredients.map((ingredient, index) => (
-    <li key={ ingredient } data-testid={ `${index}-ingredient-step` }>
-      <div>
-        <input type="checkbox" name={ ingredient } />
-        <p>{ ingredient }</p>
-      </div>
-    </li>
-  ));
+  const ingredientsList = useCheckedDrinks(ingredients);
 
   // Função para copiar para o clipboard
   const copyToClipboard = () => {
