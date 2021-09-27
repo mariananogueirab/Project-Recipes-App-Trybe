@@ -26,8 +26,8 @@ function useCheckedDrinks(ingredients) {
         <input
           type="checkbox"
           id={ index }
-          defaultChecked={ checked ? 'checked' : false }
-          // checked={ checked }
+          // defaultChecked={ checked ? 'checked' : false }
+          checked={ checked }
           name={ ingredient }
           onClick={ toggleCheckBoxChange }
         />
