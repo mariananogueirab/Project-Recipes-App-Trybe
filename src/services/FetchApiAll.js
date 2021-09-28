@@ -75,7 +75,7 @@ export const getDrinkCategories = async () => {
 
 export const getFoodByIndredients = async () => {
   const { meals } = await fetch(API_FOOD_INGREDIENTS)
-  .then((res) => res.json());
+    .then((res) => res.json());
   return meals;
 };
 
