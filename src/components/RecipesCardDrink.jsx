@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import { getApiByAllDrinks } from '../services/FetchApiAll';
 
 function RecipesCardDrink() {
   const [drinksAll, setDrinksAll] = useState([]);
+
   const { data: { recipes } } = useContext(RecipesContext);
   const history = useHistory();
   const number = 12;
@@ -37,12 +39,14 @@ function RecipesCardDrink() {
         data-testid={ `${index}-recipe-card` }
         key={ idDrink }
       >
-        <img
-          data-testid={ `${index}-card-img` }
-          src={ strDrinkThumb }
-          alt={ strDrink }
-        />
-        <h2 data-testid={ `${index}-card-name` }>{ strDrink }</h2>
+        <Link to={ `/bebidas/${idDrink}` }>
+          <img
+            data-testid={ `${index}-card-img` }
+            src={ strDrinkThumb }
+            alt={ strDrink }
+          />
+          <h2 data-testid={ `${index}-card-name` }>{ strDrink }</h2>
+        </Link>
       </div>
     )).slice(0, number)
   );

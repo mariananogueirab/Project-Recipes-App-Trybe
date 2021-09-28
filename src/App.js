@@ -19,6 +19,9 @@ import FavoritesRecipes from './pages/FavoritesRecipes';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import FoodInProgress from './pages/FoodInProgress';
+import DrinkInProgress from './pages/DrinkInProgress';
+import ExploreDrinksArea from './pages/ExploreDrinksArea';
 
 function App() {
   return (
@@ -30,8 +33,12 @@ function App() {
         <Route exact path="/bebidas" component={ Drinks } />
         <Route exact path="/comidas/:id" component={ FoodsDetails } />
         <Route exact path="/bebidas/:id" component={ DrinksDetails } />
-        {/* <Route exact path="/comidas/:id/in-progress" component={ FoodInProgress } />
-        <Route exact path="/bebidas/:id/in-progress" component={ DrinkInProgress } /> */}
+        <Route exact path="/comidas/:id/in-progress" component={ FoodInProgress } />
+        <Route
+          exact
+          path="/bebidas/:id/in-progress"
+          component={ DrinkInProgress }
+        />
         <Route exact path="/explorar" component={ Explore } />
         <Route exact path="/explorar/comidas" component={ ExploreFoods } />
         <Route exact path="/explorar/bebidas" component={ ExploreDrinks } />
@@ -46,6 +53,7 @@ function App() {
           component={ ExploreDrinksIngredients }
         />
         <Route exact path="/explorar/comidas/area" component={ ExploreFoodsArea } />
+        <Route exact path="/explorar/bebidas/area" component={ ExploreDrinksArea } />
         <Route exact path="/perfil" component={ Profile } />
         <Route exact path="/receitas-feitas" component={ RecipesMade } />
         <Route exact path="/receitas-favoritas" component={ FavoritesRecipes } />

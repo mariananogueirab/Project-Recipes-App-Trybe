@@ -42,7 +42,6 @@ function Login() {
           setLogin({ ...login, email: target.value });
         } }
       />
-
       <Input
         type="password"
         testid="password-input"
@@ -51,7 +50,6 @@ function Login() {
           setLogin({ ...login, password: target.value });
         } }
       />
-
       <Button
         testid="login-submit-btn"
         disabled={ enableButton }
