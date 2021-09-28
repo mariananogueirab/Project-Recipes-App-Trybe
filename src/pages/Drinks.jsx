@@ -40,6 +40,7 @@ function Drinks({ match: { path } }) {
         </button>
       ))}
       <RecipesCardDrink />
+
       <Footer />
     </div>
   );

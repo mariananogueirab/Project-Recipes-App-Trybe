@@ -6,6 +6,7 @@ import { getApiByAllDrinks } from '../services/FetchApiAll';
 
 function RecipesCardDrink() {
   const [drinksAll, setDrinksAll] = useState([]);
+
   const { data: { recipes } } = useContext(RecipesContext);
   const history = useHistory();
   const number = 12;
