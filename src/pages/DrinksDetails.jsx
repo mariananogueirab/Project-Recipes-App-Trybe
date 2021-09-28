@@ -7,13 +7,15 @@ import { getDrinkById, getFoodsRecomendation } from '../services/FetchApiAll';
 import RecommendationCard from '../components/RecommendationCard';
 import '../styles/recommendationCard.css';
 import RecipesContext from '../context/RecipesContext';
+import RecipesCardDetails from '../components/RecipesCardDetails';
 
 function DrinksDetails() {
   const [drink, getDrink] = useState({});
   const [foodsRecomendations, setFoodsRecomendations] = useState([]);
   const [loading, setLoading] = useState(false);
   const [recipeMade, setRecipeMade] = useState(false);
-  /* const { contextValue: { recipesMade } } = useContext(RecipesContext); */
+  const contextValue = useContext(RecipesContext);
+  const { recipesMade, setIngredientsInProgress } = contextValue;
   const INDEX_ID = 9;
   const id = useHistory().location.pathname.slice(INDEX_ID);
 
@@ -24,10 +26,10 @@ function DrinksDetails() {
       setLoading(true);
     }
     getDrinks();
-    /* if (recipesMade.foods.some((food) => food === id)) {
-      setRecipeMade(true);
-    } */
-  }, [id, /* recipesMade.foods */]);
+    if (recipesMade.foods.some((food) => food === id)) {
+      setRecipeMade(true); // esse if foi feito para bloquear o botão de iniciar receita, caso a receita já tenha sido feita
+    }
+  }, [id, recipesMade.foods]);
 
   useEffect(() => { // faz a requisição pra api da recomendação de comidas
     async function getFoodsRecom() {
@@ -50,6 +52,7 @@ function DrinksDetails() {
       const finalingredients = ingredients
         .filter((ingredient) => (
           ingredient !== ' -  '
+          && ingredient !== ' - '
           && ingredient !== 'null - null'
           && ingredient !== 'undefined - undefined'
         ));
@@ -59,35 +62,30 @@ function DrinksDetails() {
 
   const ingredients = getIngredientsAndMeasures();
 
+  function handleStartRecipe() {
+    setIngredientsInProgress({
+      foods: ingredients,
+    });
+  }
+
   return (
     <div>
       {loading ? (
         <div>
-          <h1 data-testid="recipe-title">{drink.strDrink}</h1>
-          <img
-            data-testid="recipe-photo"
-            src={ drink.strDrinkThumb }
-            alt={ drink.strDrink }
+          <RecipesCardDetails
+            title={ drink.strDrink }
+            thumb={ drink.strDrinkThumb }
+            ingredients={ ingredients }
+            instructions={ drink.strInstructions }
+            category={ drink.strAlcoholic }
           />
-          <p data-testid="recipe-category">{drink.strAlcoholic}</p>
-          <p>Ingredientes:</p>
-          <ul>
-            {ingredients
-              .map((ingredient, index) => (
-                <li
-                  key={ index }
-                  data-testid={ `${index}-ingredient-name-and-measure` }
-                >
-                  {ingredient}
-                </li>))}
-          </ul>
-          <p data-testid="instructions">{drink.strInstructions}</p>
           <RecommendationCard recommendations={ foodsRecomendations } />
           <Button
             testid="start-recipe-btn"
             label="Iniciar receita"
             className="buttonFixed" // requisito pede que o botão seja fixo lá embaixo
             disabled={ recipeMade }
+            onClick={ handleStartRecipe }
           />
           <ShareIcon />
           <FavoriteIcon />

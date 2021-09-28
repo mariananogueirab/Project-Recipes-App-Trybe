@@ -6,10 +6,10 @@ import '../styles/recommendationCard.css';
 function RecommendationCard({ recommendations }) {
   const type = useHistory().location.pathname.includes('comida') ? 'Drink' : 'Meal'; // isso é pra pegar parte da rota, pra ver se é de comida ou bebida. Pra fazer um componente só, dinâmico, pros dois.
   const NUM_OF_RECOMMENDATIONS = 6;
-  const recipesRecom = recommendations.splice(0, NUM_OF_RECOMMENDATIONS);
+  const recipesRecom = [...recommendations]; // tive que fazer isso porque tava dando conflito com o teste.
 
   function renderCard() {
-    return recipesRecom.map((recommendation, index) => (
+    return recipesRecom.splice(0, NUM_OF_RECOMMENDATIONS).map((recommendation, index) => ( // o splice é porque ele só quer 6 na tela;
       <div key={ index } className="card" data-testid={ `${index}-recomendation-card` }>
         <img
           src={ recommendation[`str${type}Thumb`] }
@@ -28,13 +28,7 @@ function RecommendationCard({ recommendations }) {
 
   return (
     <div
-      /* iemsToShow={ 3 }
-      itemsToScroll={ 3 }
-      pause="hover"temsToShow={ 3 }
-      itemsToScroll={ 3 }
-      pause="hover" */
       className="container"
-      /* data-testid="recomendation-card" */
     >
       {renderCard()}
     </div>

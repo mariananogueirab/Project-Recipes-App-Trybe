@@ -26,6 +26,16 @@ function RecipesProvider({ children }) {
     drinks: [],
   });
 
+  const [recipesInProgress, setRecipesInProgress] = useState({
+    foods: [], // colocar os ids
+    drinks: [],
+  });
+
+  const [ingredientsInProgress, setIngredientsInProgress] = useState({
+    foods: [], // colocar os ingredientes
+    drinks: [],
+  });
+
   const contextValue = {
     data,
     selected,
@@ -33,6 +43,10 @@ function RecipesProvider({ children }) {
     handleChangeSearch,
     recipesMade,
     setRecipesMade,
+    recipesInProgress,
+    setRecipesInProgress,
+    ingredientsInProgress,
+    setIngredientsInProgress,
   };
 
   return (
