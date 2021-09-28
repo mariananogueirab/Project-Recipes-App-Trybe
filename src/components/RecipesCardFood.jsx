@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import { getApiByAllFoods } from '../services/FetchApiAll';
 
@@ -37,12 +38,14 @@ function RecipesCardFood() {
         data-testid={ `${index}-recipe-card` }
         key={ idMeal }
       >
-        <img
-          data-testid={ `${index}-card-img` }
-          src={ strMealThumb }
-          alt={ strMeal }
-        />
-        <h2 data-testid={ `${index}-card-name` }>{ strMeal }</h2>
+        <Link to={ `/comidas/${idMeal}` }>
+          <img
+            data-testid={ `${index}-card-img` }
+            src={ strMealThumb }
+            alt={ strMeal }
+          />
+          <h2 data-testid={ `${index}-card-name` }>{ strMeal }</h2>
+        </Link>
       </div>
     )).slice(0, number)
   );
