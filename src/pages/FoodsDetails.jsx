@@ -35,13 +35,13 @@ function FoodsDetails() {
     }
     getRecipeById();
     if (recipesMade.meals.some((food) => food === id)) {
-      const newRecipeStatus = {...recipeStatus};
+      const newRecipeStatus = { ...recipeStatus };
       setRecipeStatus({
         ...newRecipeStatus,
         recipeMade: true }); // esse if foi feito para bloquear o botão de iniciar receita, caso a receita já tenha sido feita
     }
     if (recipesInProgress.meals.some((food) => food === id)) {
-      const newRecipeStatus = {...recipeStatus};
+      const newRecipeStatus = { ...recipeStatus };
       setRecipeStatus({
         ...newRecipeStatus,
         recipeInProgress: true }); // status da receita
@@ -82,7 +82,7 @@ function FoodsDetails() {
   function handleStartRecipe() {
     handleIngredientsInProgress(ingredients);
     handleRecipesInProgress(id);
-    history.push(`/comidas/${id}/in-progress`)
+    history.push(`/comidas/${id}/in-progress`);
   }
 
   return (

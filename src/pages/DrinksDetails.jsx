@@ -80,7 +80,7 @@ function DrinksDetails() {
   function handleStartRecipe() {
     handleIngredientsInProgress(null, ingredients);
     handleRecipesInProgress(null, id);
-    history.push(`/bebidas/${id}/in-progress`)
+    history.push(`/bebidas/${id}/in-progress`);
   }
 
   return (
