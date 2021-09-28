@@ -13,9 +13,16 @@ function FoodsDetails() {
   const [recipe, getRecipe] = useState({});
   const [drinksRecomendations, setDrinksRecomendations] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [recipeMade, setRecipeMade] = useState(false);
+  const [recipeStatus, setRecipeStatus] = useState({
+    recipeMade: false,
+    recipeInProgress: false,
+  });
   const contextValue = useContext(RecipesContext);
-  const { recipesMade, setIngredientsInProgress } = contextValue;
+  const {
+    recipesMade,
+    handleIngredientsInProgress,
+    handleRecipesInProgress,
+    recipesInProgress } = contextValue;
   const INDEX_ID = 9;
   const id = useHistory().location.pathname.slice(INDEX_ID);
 
@@ -27,9 +34,16 @@ function FoodsDetails() {
     }
     getRecipeById();
     if (recipesMade.foods.some((food) => food === id)) {
-      setRecipeMade(true); // esse if foi feito para bloquear o botão de iniciar receita, caso a receita já tenha sido feita
+      setRecipeStatus({
+        ...recipeStatus,
+        recipeMade: true }); // esse if foi feito para bloquear o botão de iniciar receita, caso a receita já tenha sido feita
     }
-  }, [id, recipesMade.foods]);
+    if (recipesInProgress.foods.some((food) => food === id)) {
+      setRecipeStatus({
+        ...recipeStatus,
+        recipeInProgress: true }); // status da receita
+    }
+  }, [id, recipesMade.foods, recipesInProgress.foods, recipeStatus]);
 
   useEffect(() => { // faz a requisição pra api da recomendação de drinks
     async function getDrinksRecom() {
@@ -63,9 +77,12 @@ function FoodsDetails() {
   const ingredients = getIngredientsAndMeasures();
 
   function handleStartRecipe() {
-    setIngredientsInProgress({
-      foods: ingredients,
-    });
+    handleIngredientsInProgress(ingredients);
+    handleRecipesInProgress(id);
+    /* setRecipeStatus({
+      ...recipeStatus,
+      recipeInProgress: true,
+    }); */
   }
 
   return (
@@ -83,9 +100,11 @@ function FoodsDetails() {
           <RecommendationCard recommendations={ drinksRecomendations } />
           <Button
             testid="start-recipe-btn"
-            label="Iniciar receita"
+            label={
+              recipeStatus.recipeInProgress ? 'Continuar Receita' : 'Iniciar receita'
+            }
             className="buttonFixed" // requisito pede que o botão seja fixo lá embaixo
-            disabled={ recipeMade }
+            disabled={ recipeStatus.recipeMade }
             onClick={ handleStartRecipe }
           />
           <ShareIcon />

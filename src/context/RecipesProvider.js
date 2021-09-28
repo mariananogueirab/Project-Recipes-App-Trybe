@@ -36,6 +36,26 @@ function RecipesProvider({ children }) {
     drinks: [],
   });
 
+  function handleRecipesInProgress(idFood, idDrink) {
+    const foodsinProgress = [...recipesInProgress.foods, idFood];
+    const drinksinProgress = [...recipesInProgress.drinks, idDrink];
+    const newRecipesInProgress = {
+      foods: idFood ? foodsinProgress : recipesInProgress.foods,
+      drinks: drinksinProgress,
+    };
+    setRecipesInProgress(newRecipesInProgress);
+  }
+
+  function handleIngredientsInProgress(foodIngredients, drinkIngredients) {
+    const foodsinProgress = foodIngredients;
+    const drinksinProgress = drinkIngredients;
+    const newRecipesInProgress = {
+      foods: foodIngredients ? foodsinProgress : recipesInProgress.foods,
+      drinks: drinksinProgress,
+    };
+    setIngredientsInProgress(newRecipesInProgress);
+  }
+
   const contextValue = {
     data,
     selected,
@@ -44,9 +64,9 @@ function RecipesProvider({ children }) {
     recipesMade,
     setRecipesMade,
     recipesInProgress,
-    setRecipesInProgress,
+    handleRecipesInProgress,
     ingredientsInProgress,
-    setIngredientsInProgress,
+    handleIngredientsInProgress,
   };
 
   return (
