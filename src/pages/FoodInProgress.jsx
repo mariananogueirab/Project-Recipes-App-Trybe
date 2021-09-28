@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import useCheckedFoods from '../hooks/useCheckedFoods';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
@@ -9,6 +9,7 @@ function FoodInProgress() {
     'Ingr 7', 'Ingr 8'];
 
   const [copied, setCopied] = useState(false);
+  const [buttonStatus, setButtonStatus] = useState(true);
   const [favorited, setFavorited] = useState(false);
   const history = useHistory();
 
@@ -42,6 +43,20 @@ function FoodInProgress() {
       setFavorited(false);
     }
   };
+
+  // cada vez que o item for checked, será verificado.
+  // caso todos os itens forem checked, o botão de enviar é habilitado
+  useEffect(() => {
+    const favoriteLocalMeals = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const { meals: { foodID } } = favoriteLocalMeals;
+    const isAllItemsChecked = foodID
+      .map(({ checked }) => checked)
+      .every((item) => item);
+
+    if (isAllItemsChecked) {
+      setButtonStatus(false);
+    }
+  }, [ingredientsList]);
 
   const handleCompleteRecipe = () => {
     history.push('/receitas-feitas');
@@ -88,6 +103,7 @@ function FoodInProgress() {
         type="button"
         data-testid="finish-recipe-btn"
         onClick={ handleCompleteRecipe }
+        disabled={ buttonStatus }
       >
         Finalizar Receita
       </button>

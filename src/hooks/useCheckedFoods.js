@@ -19,20 +19,20 @@ function useCheckedFoods(ingredients) {
     }
   };
 
+  // ATTENTION: aqui, temos um pequeno bug na renderização dos itens checked
   const ingredientsList = localFood.map(({ ingredient, checked }, index) => (
-
-    <li key={ ingredient } data-testid={ `${index}-ingredient-step` }>
-      <div>
+    <li key={ ingredient }>
+      <label htmlFor={ index } data-testid={ `${index}-ingredient-step` }>
         <input
           type="checkbox"
           id={ index }
-          defaultChecked={ checked ? 'checked' : false }
+          defaultChecked={ checked }
           // checked={ checked }
           name={ ingredient }
-          onClick={ toggleCheckBoxChange }
+          onChange={ toggleCheckBoxChange }
         />
-        <p>{ ingredient }</p>
-      </div>
+        { ingredient }
+      </label>
     </li>
   ));
 
