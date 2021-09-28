@@ -8,7 +8,7 @@ import {
 function ExploreFoodsArea() {
   const [area, setArea] = useState([]);
   const [searchArea, setSearchArea] = useState('All');
-  const [filterArea, setFilterArea] = useState([]);
+  const [filteredArea, setFilterArea] = useState([]);
   const number = 12;
   // adicona resultado da busca conforme condições de area filtradas
   const renderAreaCactegory = useCallback(async () => {
@@ -55,7 +55,7 @@ function ExploreFoodsArea() {
         }
       </select>
       {
-        filterArea.map(({ idMeal, strMeal, strMealThumb }, index) => (
+        filteredArea.map(({ idMeal, strMeal, strMealThumb }, index) => (
           <Link to={ `/comidas/${idMeal}` } key={ idMeal }>
             <div data-testid={ `${index}-recipe-card` }>
               <img
