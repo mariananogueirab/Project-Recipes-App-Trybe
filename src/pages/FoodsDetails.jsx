@@ -24,7 +24,8 @@ function FoodsDetails() {
     handleRecipesInProgress,
     recipesInProgress } = contextValue;
   const INDEX_ID = 9;
-  const id = useHistory().location.pathname.slice(INDEX_ID);
+  const history = useHistory();
+  const id = history.location.pathname.slice(INDEX_ID);
 
   useEffect(() => { // faz a requisição pra api pelo id, o requisito pede
     async function getRecipeById() {
@@ -33,17 +34,19 @@ function FoodsDetails() {
       setLoading(true);
     }
     getRecipeById();
-    if (recipesMade.foods.some((food) => food === id)) {
+    if (recipesMade.meals.some((food) => food === id)) {
+      const newRecipeStatus = {...recipeStatus};
       setRecipeStatus({
-        ...recipeStatus,
+        ...newRecipeStatus,
         recipeMade: true }); // esse if foi feito para bloquear o botão de iniciar receita, caso a receita já tenha sido feita
     }
-    if (recipesInProgress.foods.some((food) => food === id)) {
+    if (recipesInProgress.meals.some((food) => food === id)) {
+      const newRecipeStatus = {...recipeStatus};
       setRecipeStatus({
-        ...recipeStatus,
+        ...newRecipeStatus,
         recipeInProgress: true }); // status da receita
     }
-  }, [id, recipesMade.foods, recipesInProgress.foods, recipeStatus]);
+  }, [id, recipesMade.meals, recipesInProgress.meals, recipeStatus]);
 
   useEffect(() => { // faz a requisição pra api da recomendação de drinks
     async function getDrinksRecom() {
@@ -79,10 +82,7 @@ function FoodsDetails() {
   function handleStartRecipe() {
     handleIngredientsInProgress(ingredients);
     handleRecipesInProgress(id);
-    /* setRecipeStatus({
-      ...recipeStatus,
-      recipeInProgress: true,
-    }); */
+    history.push(`/comidas/${id}/in-progress`)
   }
 
   return (

@@ -22,25 +22,25 @@ function RecipesProvider({ children }) {
   };
 
   const [recipesMade, setRecipesMade] = useState({
-    foods: [], // colocar os ids
+    meals: [], // colocar os ids
     drinks: [],
   });
 
   const [recipesInProgress, setRecipesInProgress] = useState({
-    foods: [], // colocar os ids
+    meals: [], // colocar os ids
     drinks: [],
   });
 
   const [ingredientsInProgress, setIngredientsInProgress] = useState({
-    foods: [], // colocar os ingredientes
+    meals: [], // colocar os ingredientes
     drinks: [],
   });
 
   function handleRecipesInProgress(idFood, idDrink) {
-    const foodsinProgress = [...recipesInProgress.foods, idFood];
+    const foodsinProgress = [...recipesInProgress.meals, idFood];
     const drinksinProgress = [...recipesInProgress.drinks, idDrink];
     const newRecipesInProgress = {
-      foods: idFood ? foodsinProgress : recipesInProgress.foods,
+      foods: idFood ? foodsinProgress : recipesInProgress.meals,
       drinks: drinksinProgress,
     };
     setRecipesInProgress(newRecipesInProgress);
@@ -50,7 +50,7 @@ function RecipesProvider({ children }) {
     const foodsinProgress = foodIngredients;
     const drinksinProgress = drinkIngredients;
     const newRecipesInProgress = {
-      foods: foodIngredients ? foodsinProgress : recipesInProgress.foods,
+      foods: foodIngredients ? foodsinProgress : recipesInProgress.meals,
       drinks: drinksinProgress,
     };
     setIngredientsInProgress(newRecipesInProgress);

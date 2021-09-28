@@ -24,7 +24,8 @@ function DrinksDetails() {
     handleRecipesInProgress,
     recipesInProgress } = contextValue;
   const INDEX_ID = 9;
-  const id = useHistory().location.pathname.slice(INDEX_ID);
+  const history = useHistory();
+  const id = history.location.pathname.slice(INDEX_ID);
 
   useEffect(() => { // faz a requisição pra api pelo id
     async function getDrinks() {
@@ -79,6 +80,7 @@ function DrinksDetails() {
   function handleStartRecipe() {
     handleIngredientsInProgress(null, ingredients);
     handleRecipesInProgress(null, id);
+    history.push(`/bebidas/${id}/in-progress`)
   }
 
   return (
