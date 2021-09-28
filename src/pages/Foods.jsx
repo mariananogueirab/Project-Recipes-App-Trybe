@@ -27,6 +27,8 @@ function Foods({ match: { path } }) {
     ApiCategoriesFood();
   }, []);
 
+  // Requisito 28 - a realizar
+
   return (
     <div>
       <Header pageTitle="Comidas" hasSearchIcon="active" />
