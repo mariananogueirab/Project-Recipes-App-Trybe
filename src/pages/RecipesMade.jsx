@@ -3,9 +3,9 @@ import Header from '../components/Header';
 
 function RecipesMade() {
   return (
-    <div>
+    <main>
       <Header pageTitle="Receitas Feitas" hasSearchIcon={ false } />
-    </div>
+    </main>
   );
 }
 
