@@ -76,12 +76,12 @@ function FavoritesRecipes() {
                 type="image"
                 data-testid={ `${index}-horizontal-share-btn` }
                 src={ shareIcon }
-                alt="compartilhar"
+                alt="compartilhar receita"
               />
               {/* { copied ? 'Link copiado!' : 'Compartilhar Receita'} */}
               <input
                 type="image"
-                data-testid={ `${index}-horizontal-share-btn` }
+                data-testid={ `${index}-horizontal-favorite-btn` }
                 // onClick={ favoriteRecipe }
                 src={ blackHeartIcon }
                 alt="favoritar receita"
