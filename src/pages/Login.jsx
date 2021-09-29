@@ -10,6 +10,7 @@ function Login() {
   }); // Criei um estado local, porque ainda não tem nada sobre estado global.
   const [enableButton, setEnable] = useState(true); // o botão tem que estar desabilitado caso as validações do email e senha não passem, então criei um estado, foi a maneira que consegui.
   const history = useHistory(); // só jogando o hook useHistory em uma constante pra pegar o histórico
+
   useEffect(() => {
     function handleValidation() { // valida o email e a senha
       const emailPath = /^[^\s@]+@[^\s@]+\.[^\s@]+$/g; // regex retirado de projetos anteriores.
@@ -20,6 +21,7 @@ function Login() {
     }
     handleValidation();
   }, [login.email, login.password]); /// BUG
+
   function handleButtonLogin() {
     const user = {
       email: login.email,
@@ -29,6 +31,7 @@ function Login() {
     localStorage.setItem('cocktailsToken', JSON.stringify(1));
     history.push('/comidas'); // redirecionando pra página de comidas
   }
+
   return (
     <div>
       <Input
@@ -56,4 +59,5 @@ function Login() {
     </div>
   );
 }
+
 export default Login;

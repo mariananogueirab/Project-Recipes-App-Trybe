@@ -1,18 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import ShareIcon from '../components/ShareIcon';
 import FavoriteIcon from '../components/FavoriteIcon';
 import Button from '../components/Button';
 import { getDrinkById, getFoodsRecomendation } from '../services/FetchApiAll';
+import RecommendationCard from '../components/RecommendationCard';
+import '../styles/recommendationCard.css';
+import RecipesContext from '../context/RecipesContext';
+import RecipesCardDetails from '../components/RecipesCardDetails';
 
 function DrinksDetails() {
   const [drink, getDrink] = useState({});
   const [foodsRecomendations, setFoodsRecomendations] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [recipeStatus, setRecipeStatus] = useState({
+    recipeMade: false,
+    recipeInProgress: false,
+  });
+  const contextValue = useContext(RecipesContext);
+  const {
+    doneRecipes,
+    handleIngredientsInProgress,
+    handleRecipesInProgress,
+    recipesInProgress } = contextValue;
   const INDEX_ID = 9;
-  const id = useHistory().location.pathname.slice(INDEX_ID);
-
-  console.log(foodsRecomendations);
+  const history = useHistory();
+  const id = history.location.pathname.slice(INDEX_ID);
 
   useEffect(() => { // faz a requisição pra api pelo id
     async function getDrinks() {
@@ -21,7 +34,17 @@ function DrinksDetails() {
       setLoading(true);
     }
     getDrinks();
-  }, [id]);
+    if (doneRecipes.drinks.some((food) => food === id)) {
+      setRecipeStatus({
+        ...recipeStatus,
+        recipeMade: true }); // esse if foi feito para bloquear o botão de iniciar receita, caso a receita já tenha sido feita
+    }
+    if (recipesInProgress.drinks.some((food) => food === id)) {
+      setRecipeStatus({
+        ...recipeStatus,
+        recipeInProgress: true }); // status da receita
+    }
+  }, [id, doneRecipes.drinks, recipesInProgress.drinks, recipeStatus]);
 
   useEffect(() => { // faz a requisição pra api da recomendação de comidas
     async function getFoodsRecom() {
@@ -44,6 +67,7 @@ function DrinksDetails() {
       const finalingredients = ingredients
         .filter((ingredient) => (
           ingredient !== ' -  '
+          && ingredient !== ' - '
           && ingredient !== 'null - null'
           && ingredient !== 'undefined - undefined'
         ));
@@ -53,31 +77,33 @@ function DrinksDetails() {
 
   const ingredients = getIngredientsAndMeasures();
 
+  function handleStartRecipe() {
+    handleIngredientsInProgress(null, ingredients);
+    handleRecipesInProgress(null, id);
+    history.push(`/bebidas/${id}/in-progress`);
+  }
+
   return (
     <div>
       {loading ? (
         <div>
-          <h1 data-testid="recipe-title">{drink.strDrink}</h1>
-          <img
-            data-testid="recipe-photo"
-            src={ drink.strDrinkThumb }
-            alt={ drink.strDrink }
+          <RecipesCardDetails
+            title={ drink.strDrink }
+            thumb={ drink.strDrinkThumb }
+            ingredients={ ingredients }
+            instructions={ drink.strInstructions }
+            category={ drink.strAlcoholic }
           />
-          <p data-testid="recipe-category">{drink.strAlcoholic}</p>
-          <p>Ingredientes:</p>
-          <ul>
-            {ingredients
-              .map((ingredient, index) => (
-                <li
-                  key={ index }
-                  data-testid={ `${index}-ingredient-name-and-measure` }
-                >
-                  {ingredient}
-                </li>))}
-          </ul>
-          <p data-testid="instructions">{drink.strInstructions}</p>
-          <span data-testid="0-recomendation-card">Receitas Recomendadas</span>
-          <Button testid="start-recipe-btn" label="Iniciar receita" />
+          <RecommendationCard recommendations={ foodsRecomendations } />
+          <Button
+            testid="start-recipe-btn"
+            label={
+              recipeStatus.recipeInProgress ? 'Continuar Receita' : 'Iniciar receita'
+            }
+            className="buttonFixed" // requisito pede que o botão seja fixo lá embaixo
+            disabled={ recipeStatus.recipeMade }
+            onClick={ handleStartRecipe }
+          />
           <ShareIcon />
           <FavoriteIcon />
         </div>) : 'loading'}
