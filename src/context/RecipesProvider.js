@@ -21,52 +21,84 @@ function RecipesProvider({ children }) {
     setSelected((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const [recipesMade, setRecipesMade] = useState({
-    meals: [], // colocar os ids
-    drinks: [],
-  });
+  const [doneRecipes, setDoneRecipes] = useState([]); // é um array de objetos da seguinte forma:
+  /* [{
+    id: id-da-receita,
+    type: comida-ou-bebida,
+    area: area-da-receita-ou-texto-vazio,
+    category: categoria-da-receita-ou-texto-vazio,
+    alcoholicOrNot: alcoholic-ou-non-alcoholic-ou-texto-vazio,
+    name: nome-da-receita,
+    image: imagem-da-receita,
+    doneDate: quando-a-receita-foi-concluida,
+    tags: array-de-tags-da-receita-ou-array-vazio
+}] */
 
-  const [recipesInProgress, setRecipesInProgress] = useState({
-    meals: [], // colocar os ids
-    drinks: [],
-  });
+
+  const [inProgressRecipes, setInProgressRecipes] = useState({
+    meals: {}, // colocar os ids
+    coocktails: [],
+  }); // segue o formato:
+  /* {
+    cocktails: {
+        id-da-bebida: [lista-de-ingredientes-utilizados],
+        ...
+    },
+    meals: {
+        id-da-comida: [lista-de-ingredientes-utilizados],
+        ...
+    }
+} */
+
 
   const [ingredientsInProgress, setIngredientsInProgress] = useState({
     meals: [], // colocar os ingredientes
     drinks: [],
   });
 
-  function handleRecipesInProgress(idFood, idDrink) {
-    const foodsinProgress = [...recipesInProgress.meals, idFood];
-    const drinksinProgress = [...recipesInProgress.drinks, idDrink];
+  const [favoriteRecipes, setFavoriteRecipes] = useState([]); // array de objetos, na seguinte forma:
+  /* [{
+    id: id-da-receita,
+    type: comida-ou-bebida,
+    area: area-da-receita-ou-texto-vazio,
+    category: categoria-da-receita-ou-texto-vazio,
+    alcoholicOrNot: alcoholic-ou-non-alcoholic-ou-texto-vazio,
+    name: nome-da-receita,
+    image: imagem-da-receita
+}] */
+
+
+  /* function handleRecipesInProgress(idFood, idDrink) {
+    const foodsinProgress = [...inProgressRecipes.coocktails, idFood];
+    const drinksinProgress = [...inProgressRecipes.drinks, idDrink];
     const newRecipesInProgress = {
-      foods: idFood ? foodsinProgress : recipesInProgress.meals,
+      foods: idFood ? foodsinProgress : inProgressRecipes.coocktails,
       drinks: drinksinProgress,
     };
-    setRecipesInProgress(newRecipesInProgress);
-  }
+    setInProgressRecipes(newRecipesInProgress);
+  } */ //revisar
 
-  function handleIngredientsInProgress(foodIngredients, drinkIngredients) {
+  /* function handleIngredientsInProgress(foodIngredients, drinkIngredients) {
     const foodsinProgress = foodIngredients;
     const drinksinProgress = drinkIngredients;
     const newRecipesInProgress = {
-      foods: foodIngredients ? foodsinProgress : recipesInProgress.meals,
+      foods: foodIngredients ? foodsinProgress : inProgressRecipes.meals,
       drinks: drinksinProgress,
     };
     setIngredientsInProgress(newRecipesInProgress);
-  }
+  } */ //revisar
 
   const contextValue = {
     data,
     selected,
     setSearchRecipes,
     handleChangeSearch,
-    recipesMade,
-    setRecipesMade,
-    recipesInProgress,
-    handleRecipesInProgress,
+    doneRecipes,
+    setDoneRecipes,
+    inProgressRecipes,
+    /* handleRecipesInProgress, */
     ingredientsInProgress,
-    handleIngredientsInProgress,
+    /* handleIngredientsInProgress, */
   };
 
   return (

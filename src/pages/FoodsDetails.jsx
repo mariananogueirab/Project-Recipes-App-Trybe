@@ -19,7 +19,7 @@ function FoodsDetails() {
   });
   const contextValue = useContext(RecipesContext);
   const {
-    recipesMade,
+    doneRecipes,
     handleIngredientsInProgress,
     handleRecipesInProgress,
     recipesInProgress } = contextValue;
@@ -34,7 +34,7 @@ function FoodsDetails() {
       setLoading(true);
     }
     getRecipeById();
-    if (recipesMade.meals.some((food) => food === id)) {
+    if (doneRecipes.meals.some((food) => food === id)) {
       const newRecipeStatus = { ...recipeStatus };
       setRecipeStatus({
         ...newRecipeStatus,
@@ -46,7 +46,7 @@ function FoodsDetails() {
         ...newRecipeStatus,
         recipeInProgress: true }); // status da receita
     }
-  }, [id, recipesMade.meals, recipesInProgress.meals, recipeStatus]);
+  }, [id, doneRecipes.meals, recipesInProgress.meals, recipeStatus]);
 
   useEffect(() => { // faz a requisição pra api da recomendação de drinks
     async function getDrinksRecom() {
