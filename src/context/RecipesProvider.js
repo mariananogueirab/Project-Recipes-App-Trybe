@@ -21,7 +21,28 @@ function RecipesProvider({ children }) {
     setSelected((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const [doneRecipes, setDoneRecipes] = useState([]); // é um array de objetos da seguinte forma:
+  const [doneRecipes, setDoneRecipes] = useState([{
+    id: 0,
+    type: '',
+    area: '',
+    category: '',
+    alcoholicOrNot: '',
+    name: '',
+    image: '',
+    doneDate: '',
+    tags: [],
+  },
+  {
+    id: 1,
+    type: '',
+    area: '',
+    category: '',
+    alcoholicOrNot: '',
+    name: '',
+    image: '',
+    doneDate: '',
+    tags: [],
+  }]); // é um array de objetos da seguinte forma:
   /* [{
     id: id-da-receita,
     type: comida-ou-bebida,
@@ -99,6 +120,7 @@ function RecipesProvider({ children }) {
     setInProgressRecipes,
     favoriteRecipes,
     setFavoriteRecipes,
+    setIngredientsInProgress,
   };
 
   return (
