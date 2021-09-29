@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router';
 import Button from '../components/Button';
 import Header from '../components/Header';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
@@ -7,8 +8,12 @@ import shareIcon from '../images/shareIcon.svg';
 
 function FavoritesRecipes() {
   const [recipes, setRecipes] = useState({ meals: [], drinks: [] });
-  const number = 12;
+  const [recipesFiltered, setRecipesFiltered] = useState([]);
+  const [copied, setCopied] = useState(false);
+  const history = useHistory();
 
+  // criado para simular as receitas favoritas no localstorage enquanto as implementações anteriores ficam prontas
+  // deverá ser removida desta linha até a linha 46 (useEffect todo)
   const favoriteRecipes = useCallback(() => ([{
     id: '52771',
     type: 'comida',
@@ -32,11 +37,38 @@ function FavoritesRecipes() {
     localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes()));
   }, [favoriteRecipes]);
 
+  // copia a url local para área de transferencia através do clipboard
+  const copyToClipboard = ({ target: { id } }) => {
+    navigator.clipboard.writeText(`${window.location.origin}/${id}`);
+    setCopied(true);
+  };
+  // insere as receitas resgatadas do localstorage no stado local conforme chave específicas de comidas e bebidas
   const allocateRecipes = (recipesLocal) => {
     setRecipes((prevState) => ({
       ...prevState, meals: recipesLocal.filter(({ type }) => type === 'comida') }));
     setRecipes((prevState) => ({
       ...prevState, drinks: recipesLocal.filter(({ type }) => type === 'bebida') }));
+    setRecipesFiltered(recipesLocal);
+  };
+  // remove receita pelo id do localstorage e do estado local
+  const favoriteRemove = ({ target: { id } }) => {
+    const recipesLocal = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    localStorage.setItem('favoriteRecipes',
+      JSON.stringify(recipesLocal.filter((rec) => rec.id !== id)));
+    const getRecipesLocal = localStorage.getItem('favoriteRecipes');
+    if (getRecipesLocal) {
+      allocateRecipes(JSON.parse(getRecipesLocal));
+    }
+  };
+  // renderiza as receitas conforme as opções dos botões
+  const renderRecipes = ({ target: { innerText } }) => {
+    if (innerText === 'All') {
+      setRecipesFiltered([...recipes.meals, ...recipes.drinks]);
+    } else if (innerText === 'Food') {
+      setRecipesFiltered([...recipes.meals]);
+    } else {
+      setRecipesFiltered([...recipes.drinks]);
+    }
   };
 
   useEffect(() => {
@@ -49,48 +81,51 @@ function FavoritesRecipes() {
   return (
     <div>
       <Header pageTitle="Receitas Favoritas" hasSearchIcon={ false } />
-      <Button label="All" testid="filter-by-all-btn" />
-      <Button label="Food" testid="filter-by-food-btn" />
-      <Button label="Drinks" testid="filter-by-drink-btn" />
-
+      <Button onClick={ renderRecipes } label="All" testid="filter-by-all-btn" />
+      <Button onClick={ renderRecipes } label="Food" testid="filter-by-food-btn" />
+      <Button onClick={ renderRecipes } label="Drinks" testid="filter-by-drink-btn" />
       {
-        [...recipes.meals, ...recipes.drinks].map((
-          { id, area, category, name, image, alcoholicOrNot }, index,
+        recipesFiltered.map((
+          { id, area, category, name, image, alcoholicOrNot, type }, index,
         ) => (
-          <Link to={ `/comidas/${id}` } key={ id }>
-            <div data-testid={ `${index}-${name}-horizontal-tag` }>
+          <div key={ id } data-testid={ `${index}-${name}-horizontal-tag` }>
+            <Link to={ `/${type}s/${id}` }>
               <img
                 data-testid={ `${index}-horizontal-image` }
                 src={ image }
                 alt={ name }
               />
               <h2 data-testid={ `${index}-horizontal-name` }>{ name }</h2>
-              <h3 data-testid={ `${index}-horizontal-top-text` }>{ category }</h3>
-              <span>
-                { area }
-              </span>
-              <span>
-                { alcoholicOrNot }
-              </span>
-              <input
-                type="image"
+            </Link>
+            <div data-testid={ `${index}-horizontal-top-text` }>
+              <p>{ `${area} - ${category}` }</p>
+              <p>{ alcoholicOrNot }</p>
+            </div>
+            <button
+              id={ `${type}s/${id}` }
+              type="button"
+              style={ { border: 'none' } }
+              onClick={ copyToClipboard }
+            >
+              <img
+                id={ `${type}s/${id}` }
                 data-testid={ `${index}-horizontal-share-btn` }
                 src={ shareIcon }
-                alt="compartilhar receita"
+                alt={ type }
               />
-              {/* { copied ? 'Link copiado!' : 'Compartilhar Receita'} */}
-              <input
-                type="image"
-                data-testid={ `${index}-horizontal-favorite-btn` }
-                // onClick={ favoriteRecipe }
-                src={ blackHeartIcon }
-                alt="favoritar receita"
-              />
-            </div>
-          </Link>
-        )).slice(0, number)
+              { copied ? 'Link copiado!' : 'Compartilhar Receita'}
+            </button>
+            <input
+              id={ id }
+              type="image"
+              data-testid={ `${index}-horizontal-favorite-btn` }
+              onClick={ favoriteRemove }
+              src={ blackHeartIcon }
+              alt="favoritar receita"
+            />
+          </div>
+        ))
       }
-
     </div>
   );
 }
