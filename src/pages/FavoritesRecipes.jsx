@@ -111,7 +111,7 @@ function FavoritesRecipes() {
                 src={ shareIcon }
                 alt={ type }
               />
-              { copied ? 'Link copiado!' : 'Compartilhar Receita'}
+              { copied && 'Link copiado!' }
             </button>
             <input
               id={ id }
