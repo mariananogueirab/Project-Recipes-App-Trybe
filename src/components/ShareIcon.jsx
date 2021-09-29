@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import shareIcon from '../images/shareIcon.svg';
 
-function ShareIcon({ id }) {
+function ShareIcon() {
   const [copied, setCopied] = useState(false);
   const history = useHistory();
-  console.log(history);
   const copyToClipboard = () => {
     // coloquei o id da comida (52771) para passar no teste
     // window.location.href = 'http://localhost:3000/comidas/52771';

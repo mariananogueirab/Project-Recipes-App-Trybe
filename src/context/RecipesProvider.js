@@ -90,6 +90,7 @@ function RecipesProvider({ children }) {
     name: nome-da-receita,
     image: imagem-da-receita
 }] */
+  console.log(favoriteRecipes);
 
   function handleFavoriteRecipes(recipe) {
     if (!(favoriteRecipes.some((recipeFav) => recipeFav.id === recipe.id))) {
@@ -97,6 +98,14 @@ function RecipesProvider({ children }) {
       setFavoriteRecipes(newFavoriteRecipes);
     }
   } // só adiciona aos favoritos uma vez
+
+  function removeFavoriteRecipes(recipe) {
+    const favoriteRecipesRem = [...favoriteRecipes];
+    const newFavoriteRecipes = favoriteRecipesRem
+      .filter((favRecipe) => favRecipe.id !== recipe.id);
+    setFavoriteRecipes(newFavoriteRecipes);
+    console.log(newFavoriteRecipes);
+  }
 
   const contextValue = {
     data,
@@ -110,6 +119,7 @@ function RecipesProvider({ children }) {
     handleCocktailsInProgress,
     favoriteRecipes,
     handleFavoriteRecipes,
+    removeFavoriteRecipes,
   };
 
   return (
