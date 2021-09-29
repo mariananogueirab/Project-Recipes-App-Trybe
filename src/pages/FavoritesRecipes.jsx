@@ -2,28 +2,30 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../components/Button';
 import Header from '../components/Header';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import shareIcon from '../images/shareIcon.svg';
 
 function FavoritesRecipes() {
   const [recipes, setRecipes] = useState({ meals: [], drinks: [] });
   const number = 12;
 
   const favoriteRecipes = useCallback(() => ([{
-    id: '53014',
+    id: '52771',
     type: 'comida',
     area: 'Italian',
-    category: 'Miscellaneous',
+    category: 'Vegetarian',
     alcoholicOrNot: '',
-    name: 'Pizza Express Margherita',
-    image: 'https://www.themealdb.com/images/media/meals/x0lk931587671540.jpg',
+    name: 'Spicy Arrabiata Penne',
+    image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
   },
   {
-    id: '14181',
+    id: '178319',
     type: 'bebida',
-    area: 'Italian',
-    category: 'Coffee / Tea',
+    area: '',
+    category: 'Cocktail',
     alcoholicOrNot: 'Alcoholic',
-    name: 'Cafe Savoy',
-    image: 'https://www.thecocktaildb.com/images/media/drink/vqwptt1441247711.jpg',
+    name: 'Aquamarine',
+    image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
   }]), []);
 
   useEffect(() => {
@@ -52,7 +54,9 @@ function FavoritesRecipes() {
       <Button label="Drinks" testid="filter-by-drink-btn" />
 
       {
-        recipes.meals.map(({ id, area, category, name, image }, index) => (
+        [...recipes.meals, ...recipes.drinks].map((
+          { id, area, category, name, image, alcoholicOrNot }, index,
+        ) => (
           <Link to={ `/comidas/${id}` } key={ id }>
             <div data-testid={ `${index}-${name}-horizontal-tag` }>
               <img
@@ -64,8 +68,24 @@ function FavoritesRecipes() {
               <h3 data-testid={ `${index}-horizontal-top-text` }>{ category }</h3>
               <span>
                 { area }
-                {' '}
               </span>
+              <span>
+                { alcoholicOrNot }
+              </span>
+              <input
+                type="image"
+                data-testid={ `${index}-horizontal-share-btn` }
+                src={ shareIcon }
+                alt="compartilhar"
+              />
+              {/* { copied ? 'Link copiado!' : 'Compartilhar Receita'} */}
+              <input
+                type="image"
+                data-testid={ `${index}-horizontal-share-btn` }
+                // onClick={ favoriteRecipe }
+                src={ blackHeartIcon }
+                alt="favoritar receita"
+              />
             </div>
           </Link>
         )).slice(0, number)
