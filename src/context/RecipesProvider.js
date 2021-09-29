@@ -34,7 +34,6 @@ function RecipesProvider({ children }) {
     tags: array-de-tags-da-receita-ou-array-vazio
 }] */
 
-
   const [inProgressRecipes, setInProgressRecipes] = useState({
     meals: {}, // colocar os ids
     coocktails: [],
@@ -49,7 +48,6 @@ function RecipesProvider({ children }) {
         ...
     }
 } */
-
 
   const [ingredientsInProgress, setIngredientsInProgress] = useState({
     meals: [], // colocar os ingredientes
@@ -67,7 +65,6 @@ function RecipesProvider({ children }) {
     image: imagem-da-receita
 }] */
 
-
   /* function handleRecipesInProgress(idFood, idDrink) {
     const foodsinProgress = [...inProgressRecipes.coocktails, idFood];
     const drinksinProgress = [...inProgressRecipes.drinks, idDrink];
@@ -76,7 +73,7 @@ function RecipesProvider({ children }) {
       drinks: drinksinProgress,
     };
     setInProgressRecipes(newRecipesInProgress);
-  } */ //revisar
+  } */ // revisar
 
   /* function handleIngredientsInProgress(foodIngredients, drinkIngredients) {
     const foodsinProgress = foodIngredients;
@@ -86,7 +83,7 @@ function RecipesProvider({ children }) {
       drinks: drinksinProgress,
     };
     setIngredientsInProgress(newRecipesInProgress);
-  } */ //revisar
+  } */ // revisar
 
   const contextValue = {
     data,
@@ -99,6 +96,9 @@ function RecipesProvider({ children }) {
     /* handleRecipesInProgress, */
     ingredientsInProgress,
     /* handleIngredientsInProgress, */
+    setInProgressRecipes,
+    favoriteRecipes,
+    setFavoriteRecipes,
   };
 
   return (
