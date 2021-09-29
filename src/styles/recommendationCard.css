@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.card {
+  flex: 0 0 auto;
+  margin: 5px;
+  width: 45vw;
+}
+
+/* referência:
+https://codeburst.io/how-to-create-horizontal-scrolling-containers-d8069651e9c6 */
+
+.buttonFixed { /* requisito pede que seja fixo */
+  bottom: 0;
+  left: 45vw;
+  position: fixed;
+}
