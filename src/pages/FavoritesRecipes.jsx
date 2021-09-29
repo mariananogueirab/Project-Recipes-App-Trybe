@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router';
 import Button from '../components/Button';
 import Header from '../components/Header';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
@@ -10,7 +9,6 @@ function FavoritesRecipes() {
   const [recipes, setRecipes] = useState({ meals: [], drinks: [] });
   const [recipesFiltered, setRecipesFiltered] = useState([]);
   const [copied, setCopied] = useState(false);
-  const history = useHistory();
 
   // criado para simular as receitas favoritas no localstorage enquanto as implementações anteriores ficam prontas
   // deverá ser removida desta linha até a linha 46 (useEffect todo)
