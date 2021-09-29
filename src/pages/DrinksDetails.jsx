@@ -19,7 +19,7 @@ function DrinksDetails() {
   });
   const contextValue = useContext(RecipesContext);
   const {
-    recipesMade,
+    doneRecipes,
     handleIngredientsInProgress,
     handleRecipesInProgress,
     recipesInProgress } = contextValue;
@@ -34,7 +34,7 @@ function DrinksDetails() {
       setLoading(true);
     }
     getDrinks();
-    if (recipesMade.drinks.some((food) => food === id)) {
+    if (doneRecipes.drinks.some((food) => food === id)) {
       setRecipeStatus({
         ...recipeStatus,
         recipeMade: true }); // esse if foi feito para bloquear o botão de iniciar receita, caso a receita já tenha sido feita
@@ -44,7 +44,7 @@ function DrinksDetails() {
         ...recipeStatus,
         recipeInProgress: true }); // status da receita
     }
-  }, [id, recipesMade.drinks, recipesInProgress.drinks, recipeStatus]);
+  }, [id, doneRecipes.drinks, recipesInProgress.drinks, recipeStatus]);
 
   useEffect(() => { // faz a requisição pra api da recomendação de comidas
     async function getFoodsRecom() {
