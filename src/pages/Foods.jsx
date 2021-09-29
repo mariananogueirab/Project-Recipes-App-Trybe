@@ -4,10 +4,12 @@ import SearchBar from '../components/SearchBar';
 import Footer from '../components/Footer';
 import RecipesCardFood from '../components/RecipesCardFood';
 import Header from '../components/Header';
-import { getFoodCategories } from '../services/FetchApiAll';
+import { getFoodCategories, RecipesFilterFood, getApiByAllFoods } from '../services/FetchApiAll';
 
 function Foods({ match: { path } }) {
   const [categories, setCategories] = useState([]);
+  const [nameCategoryFilter, setNameCategoryFilter] = useState('');
+  /* const [foodsAll, setFoodsAll] = useState([]); */
 
   // Requisição Api de Categorias de Comidas. Devem ser exibidas apenas as 5 primeiras categorias retornadas da API.
   // Neste caso, a função será executada similarmente ao 'componentDidMount', rodando apenas uma vez e na montagem do componente.
@@ -28,7 +30,24 @@ function Foods({ match: { path } }) {
   }, []);
 
   // Requisito 28 - a realizar
+  useEffect(() => {
+    async function FilterRecipesFood() {
+      const meals = await RecipesFilterFood(nameCategoryFilter);
+      /* setFoodsAll(meals); */
+    }
+    FilterRecipesFood();
+  }, [nameCategoryFilter]);
 
+  async function handleClick(nameCategory) {
+    if (nameCategory !== nameCategoryFilter) {
+      setNameCategoryFilter(nameCategory);
+    } else {
+
+      /*  const meals = await getApiByAllFoods();
+      setFoodsAll(meals);
+      setNameCategoryFilter(''); */
+    }
+  }
   return (
     <div>
       <Header pageTitle="Comidas" hasSearchIcon="active" />
@@ -39,6 +58,7 @@ function Foods({ match: { path } }) {
           key={ index }
           type="button"
           data-testid={ `${element}-category-filter` }
+          onClick={ () => { handleClick(element); } }
         >
           {element}
         </button>
