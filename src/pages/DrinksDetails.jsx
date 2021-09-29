@@ -39,13 +39,15 @@ function DrinksDetails() {
         ...newRecipeStatus,
         recipeDone: true }); // esse if foi feito para bloquear o botão de iniciar receita, caso a receita já tenha sido feita
     }
-    if (inProgressRecipes.cocktails.id) {
+    const localStRecipesInprogress = (
+      JSON.parse(localStorage.getItem('inProgressRecipes')));
+    if (localStRecipesInprogress !== null && localStRecipesInprogress.cocktails[id]) {
       const newRecipeStatus = { ...recipeStatus };
       setRecipeStatus({
         ...newRecipeStatus,
         recipeInProgress: true }); // status da receita
     }
-  }, [id, doneRecipes, inProgressRecipes.cocktails, recipeStatus]);
+  }, [id, doneRecipes, inProgressRecipes]);
 
   useEffect(() => { // faz a requisição pra api da recomendação de comidas
     async function getFoodsRecom() {
