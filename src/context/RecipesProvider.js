@@ -92,9 +92,11 @@ function RecipesProvider({ children }) {
 }] */
 
   function handleFavoriteRecipes(recipe) {
-    const newFavoriteRecipes = [...favoriteRecipes, recipe];
-    setFavoriteRecipes(newFavoriteRecipes);
-  }
+    if (!(favoriteRecipes.some((recipeFav) => recipeFav.id === recipe.id))) {
+      const newFavoriteRecipes = [...favoriteRecipes, recipe];
+      setFavoriteRecipes(newFavoriteRecipes);
+    }
+  } // só adiciona aos favoritos uma vez
 
   const contextValue = {
     data,

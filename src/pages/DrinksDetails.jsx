@@ -106,8 +106,8 @@ function DrinksDetails() {
             disabled={ recipeStatus.recipeDone }
             onClick={ handleStartRecipe }
           />
-          <ShareIcon />
-          <FavoriteIcon />
+          <ShareIcon id={id} />
+          <FavoriteIcon recipe={ drink } />
         </div>) : 'loading'}
     </div>
   );

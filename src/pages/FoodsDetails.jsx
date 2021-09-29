@@ -82,7 +82,7 @@ function FoodsDetails() {
 
   function handleStartRecipe() {
     handleMealsInProgress(id, ingredients);
-    /* history.push(`/comidas/${id}/in-progress`); */
+    history.push(`/comidas/${id}/in-progress`);
   }
 
   return (
@@ -107,8 +107,8 @@ function FoodsDetails() {
             disabled={ recipeStatus.recipeDone }
             onClick={ handleStartRecipe }
           />
-          <ShareIcon />
-          <FavoriteIcon />
+          <ShareIcon id={ id } />
+          <FavoriteIcon recipe={ recipe } />
         </div>) : 'loading'}
     </div>
   );
