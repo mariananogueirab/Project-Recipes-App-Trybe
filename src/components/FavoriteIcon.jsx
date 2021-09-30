@@ -9,7 +9,7 @@ function FavoriteIcon({ recipe }) {
   const [favorited, setFavorited] = useState(false);
   const typeOf = useHistory().location.pathname.includes('comida') ? 'Meal' : 'Drink';
   const contextValue = useContext(RecipesContext);
-  const { handleFavoriteRecipes, favoriteRecipes, removeFavoriteRecipes } = contextValue;
+  const { handleFavoriteRecipes, removeFavoriteRecipes } = contextValue;
 
   const newFavoriteRecipes = {
     id: recipe[`id${typeOf}`],
