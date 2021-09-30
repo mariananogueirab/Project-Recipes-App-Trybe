@@ -90,12 +90,15 @@ function RecipesProvider({ children }) {
     name: nome-da-receita,
     image: imagem-da-receita
 }] */
-  console.log(favoriteRecipes);
 
   function handleFavoriteRecipes(recipe) {
     if (!(favoriteRecipes.some((recipeFav) => recipeFav.id === recipe.id))) {
       const newFavoriteRecipes = [...favoriteRecipes, recipe];
       setFavoriteRecipes(newFavoriteRecipes);
+      localStorage
+        .setItem('favoriteRecipes', JSON.stringify(
+          newFavoriteRecipes,
+        ));
     }
   } // só adiciona aos favoritos uma vez
 
@@ -104,7 +107,10 @@ function RecipesProvider({ children }) {
     const newFavoriteRecipes = favoriteRecipesRem
       .filter((favRecipe) => favRecipe.id !== recipe.id);
     setFavoriteRecipes(newFavoriteRecipes);
-    console.log(newFavoriteRecipes);
+    localStorage
+      .setItem('favoriteRecipes', JSON.stringify(
+        newFavoriteRecipes,
+      ));
   }
 
   const contextValue = {
@@ -117,7 +123,6 @@ function RecipesProvider({ children }) {
     inProgressRecipes,
     handleMealsInProgress,
     handleCocktailsInProgress,
-    favoriteRecipes,
     handleFavoriteRecipes,
     removeFavoriteRecipes,
   };

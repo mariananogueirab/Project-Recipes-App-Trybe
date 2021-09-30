@@ -10,7 +10,6 @@ function FavoriteIcon({ recipe }) {
   const typeOf = useHistory().location.pathname.includes('comida') ? 'Meal' : 'Drink';
   const contextValue = useContext(RecipesContext);
   const { handleFavoriteRecipes, favoriteRecipes, removeFavoriteRecipes } = contextValue;
-  console.log(favorited);
 
   const newFavoriteRecipes = {
     id: recipe[`id${typeOf}`],
@@ -24,22 +23,17 @@ function FavoriteIcon({ recipe }) {
 
   function favoriteRecipe() {
     if (!favorited) {
-      localStorage
-        .setItem('favoriteRecipes', JSON.stringify(
-          [...favoriteRecipes, newFavoriteRecipes],
-        ));
       setFavorited(true);
       handleFavoriteRecipes(newFavoriteRecipes);
     } else {
-      localStorage.removeItem('favoriteRecipes');
       removeFavoriteRecipes(newFavoriteRecipes);
       setFavorited(false);
     }
   }
 
   function renderHeart() {
-    const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) !== null
-      ? JSON.parse(localStorage.getItem('favoriteRecipes')) : [];
+    const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) !== null ? JSON
+      .parse(localStorage.getItem('favoriteRecipes')) : [];
     if (favRecipes
       .some((favRecipe) => favRecipe.id === newFavoriteRecipes.id) || favorited) {
       return blackHeartIcon;
