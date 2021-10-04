@@ -91,9 +91,12 @@ function RecipesProvider({ children }) {
     image: imagem-da-receita
 }] */
 
-  function handleFavoriteRecipes(recipe) {
+  function handleFavoriteRecipes(recipe) { // tô pegando pelo localStorage porque quando muda a URL não tá salvando o estado
     if (!(favoriteRecipes.some((recipeFav) => recipeFav.id === recipe.id))) {
-      const newFavoriteRecipes = [...favoriteRecipes, recipe];
+      const favsLocalStorage = JSON.parse(localStorage
+        .getItem('favoriteRecipes')) !== null
+        ? JSON.parse(localStorage.getItem('favoriteRecipes')) : [];
+      const newFavoriteRecipes = [...favsLocalStorage, recipe];
       setFavoriteRecipes(newFavoriteRecipes);
       localStorage
         .setItem('favoriteRecipes', JSON.stringify(
@@ -102,8 +105,10 @@ function RecipesProvider({ children }) {
     }
   } // só adiciona aos favoritos uma vez
 
-  function removeFavoriteRecipes(recipe) {
-    const favoriteRecipesRem = [...favoriteRecipes];
+  function removeFavoriteRecipes(recipe) { // tô pegando pelo localStorage porque quando muda a URL não tá salvando o estado
+    const favsLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes')) !== null
+      ? JSON.parse(localStorage.getItem('favoriteRecipes')) : [];
+    const favoriteRecipesRem = [...favsLocalStorage];
     const newFavoriteRecipes = favoriteRecipesRem
       .filter((favRecipe) => favRecipe.id !== recipe.id);
     setFavoriteRecipes(newFavoriteRecipes);
@@ -121,6 +126,9 @@ function RecipesProvider({ children }) {
     doneRecipes,
     handleDoneRecipes,
     inProgressRecipes,
+    setInProgressRecipes,
+    favoriteRecipes,
+    setFavoriteRecipes,
     handleMealsInProgress,
     handleCocktailsInProgress,
     handleFavoriteRecipes,

@@ -1,36 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import RecipesContext from '../context/RecipesContext';
-import { getApiByAllFoods } from '../services/FetchApiAll';
 
-function RecipesCardFood() {
-  const [foodsAll, setFoodsAll] = useState([]);
-  const { data: { recipes } } = useContext(RecipesContext);
-  const history = useHistory();
+function RecipesCardFood({ renderRecipies }) {
   const number = 12;
-  const msg = 'Sinto muito, não encontramos nenhuma receita para esses filtros.';
-
-  // renderiza conforme as condições expecíficas dos requisitos
-  const renderRecipies = () => {
-    if (!recipes) {
-      global.alert(msg);
-      return foodsAll;
-    }
-    if (recipes.length === 1) {
-      history.push(`/comidas/${recipes[0].idMeal}`);
-    }
-    if (recipes.length > 0) return recipes;
-    if (recipes.length === 0) return foodsAll;
-  };
-
-  useEffect(() => { // faz a requisição pra api de bebidas sem filtros
-    async function getFoodsAll() {
-      const meals = await getApiByAllFoods();
-      setFoodsAll(meals);
-    }
-    getFoodsAll();
-  }, []);
 
   return (
     renderRecipies().map(({ idMeal, strMeal, strMealThumb }, index) => (

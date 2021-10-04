@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
@@ -21,24 +21,25 @@ function FavoriteIcon({ recipe }) {
     image: recipe[`str${typeOf}Thumb`],
   };
 
-  function favoriteRecipe() {
-    if (!favorited) {
+  const favsLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes')) !== null
+    ? JSON.parse(localStorage.getItem('favoriteRecipes')) : [];
+
+  const favoritedLocalStorage = favsLocalStorage
+    .some((favRecipe) => favRecipe.id === newFavoriteRecipes.id);
+
+  useEffect(() => {
+    if (favoritedLocalStorage) {
       setFavorited(true);
+    }
+  }, [favoritedLocalStorage]);
+
+  function favoriteRecipe() {
+    setFavorited((prevState) => !prevState);
+    if (!favorited) {
       handleFavoriteRecipes(newFavoriteRecipes);
     } else {
       removeFavoriteRecipes(newFavoriteRecipes);
-      setFavorited(false);
     }
-  }
-
-  function renderHeart() {
-    const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) !== null ? JSON
-      .parse(localStorage.getItem('favoriteRecipes')) : [];
-    if (favRecipes
-      .some((favRecipe) => favRecipe.id === newFavoriteRecipes.id) || favorited) {
-      return blackHeartIcon;
-    }
-    return whiteHeartIcon;
   }
 
   return (
@@ -46,7 +47,7 @@ function FavoriteIcon({ recipe }) {
       type="image"
       data-testid="favorite-btn"
       onClick={ favoriteRecipe }
-      src={ renderHeart() }
+      src={ favorited ? blackHeartIcon : whiteHeartIcon }
       alt="favoritar receita"
     />
   );
