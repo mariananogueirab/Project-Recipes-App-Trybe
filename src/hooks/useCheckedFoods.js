@@ -31,7 +31,9 @@ function useCheckedFoods(ingredients) {
           name={ ingredient }
           onChange={ toggleCheckBoxChange }
         />
-        { ingredient }
+        <span style={ { textDecoration: checked ? 'line-through' : 'none' } }>
+          { ingredient }
+        </span>
       </label>
     </li>
   ));
