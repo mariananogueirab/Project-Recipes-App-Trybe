@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../components/Button';
 import Header from '../components/Header';
@@ -9,31 +9,6 @@ function FavoritesRecipes() {
   const [recipes, setRecipes] = useState({ meals: [], drinks: [] });
   const [recipesFiltered, setRecipesFiltered] = useState([]);
   const [copied, setCopied] = useState(false);
-
-  // criado para simular as receitas favoritas no localstorage enquanto as implementações anteriores ficam prontas
-  // deverá ser removida desta linha até a linha 46 (useEffect todo)
-  // const favoriteRecipes = useCallback(() => ([{
-  //   id: '52771',
-  //   type: 'comida',
-  //   area: 'Italian',
-  //   category: 'Vegetarian',
-  //   alcoholicOrNot: '',
-  //   name: 'Spicy Arrabiata Penne',
-  //   image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
-  // },
-  // {
-  //   id: '178319',
-  //   type: 'bebida',
-  //   area: '',
-  //   category: 'Cocktail',
-  //   alcoholicOrNot: 'Alcoholic',
-  //   name: 'Aquamarine',
-  //   image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
-  // }]), []);
-
-  // useEffect(() => {
-  //   localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes()));
-  // }, [favoriteRecipes]);
 
   // copia a url local para área de transferencia através do clipboard
   const copyToClipboard = ({ target: { id } }) => {
