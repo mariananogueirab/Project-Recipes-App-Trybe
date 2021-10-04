@@ -12,28 +12,28 @@ function FavoritesRecipes() {
 
   // criado para simular as receitas favoritas no localstorage enquanto as implementações anteriores ficam prontas
   // deverá ser removida desta linha até a linha 46 (useEffect todo)
-  const favoriteRecipes = useCallback(() => ([{
-    id: '52771',
-    type: 'comida',
-    area: 'Italian',
-    category: 'Vegetarian',
-    alcoholicOrNot: '',
-    name: 'Spicy Arrabiata Penne',
-    image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
-  },
-  {
-    id: '178319',
-    type: 'bebida',
-    area: '',
-    category: 'Cocktail',
-    alcoholicOrNot: 'Alcoholic',
-    name: 'Aquamarine',
-    image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
-  }]), []);
+  // const favoriteRecipes = useCallback(() => ([{
+  //   id: '52771',
+  //   type: 'comida',
+  //   area: 'Italian',
+  //   category: 'Vegetarian',
+  //   alcoholicOrNot: '',
+  //   name: 'Spicy Arrabiata Penne',
+  //   image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
+  // },
+  // {
+  //   id: '178319',
+  //   type: 'bebida',
+  //   area: '',
+  //   category: 'Cocktail',
+  //   alcoholicOrNot: 'Alcoholic',
+  //   name: 'Aquamarine',
+  //   image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
+  // }]), []);
 
-  useEffect(() => {
-    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes()));
-  }, [favoriteRecipes]);
+  // useEffect(() => {
+  //   localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes()));
+  // }, [favoriteRecipes]);
 
   // copia a url local para área de transferencia através do clipboard
   const copyToClipboard = ({ target: { id } }) => {
@@ -89,6 +89,7 @@ function FavoritesRecipes() {
           <div key={ id } data-testid={ `${index}-${name}-horizontal-tag` }>
             <Link to={ `/${type}s/${id}` }>
               <img
+                width="300px"
                 data-testid={ `${index}-horizontal-image` }
                 src={ image }
                 alt={ name }
