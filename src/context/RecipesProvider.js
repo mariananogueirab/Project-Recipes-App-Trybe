@@ -121,6 +121,13 @@ function RecipesProvider({ children }) {
     doneRecipes,
     handleDoneRecipes,
     inProgressRecipes,
+    /* handleRecipesInProgress, */
+    /* ingredientsInProgress, */
+    /* handleIngredientsInProgress, */
+    setInProgressRecipes,
+    favoriteRecipes,
+    setFavoriteRecipes,
+    /* setIngredientsInProgress, */
     handleMealsInProgress,
     handleCocktailsInProgress,
     handleFavoriteRecipes,
