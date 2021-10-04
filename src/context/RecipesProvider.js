@@ -23,7 +23,7 @@ function RecipesProvider({ children }) {
 
   const [doneRecipes, setDoneRecipes] = useState([{
     id: 0,
-    type: '',
+    type: 'food',
     area: '',
     category: '',
     alcoholicOrNot: '',
@@ -34,7 +34,7 @@ function RecipesProvider({ children }) {
   },
   {
     id: 1,
-    type: '',
+    type: 'drink',
     area: '',
     category: '',
     alcoholicOrNot: '',
