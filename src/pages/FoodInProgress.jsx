@@ -3,6 +3,7 @@ import { useHistory } from 'react-router';
 import useCheckedFoods from '../hooks/useCheckedFoods';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import shareIcon from '../images/shareIcon.svg';
 
 function FoodInProgress() {
   const ingredients = ['Ingr 1', 'Ingr 2', 'Ingr 3', 'Ingr 4', 'Ingr 5', 'Ingr 6',
@@ -68,13 +69,16 @@ function FoodInProgress() {
       {/* Criar um componente RecipeHeader */}
       <div>
         <h2 data-testid="recipe-title">Titulo da Receita</h2>
-        <button
-          type="button"
-          data-testid="share-btn"
-          onClick={ copyToClipboard }
-        >
-          { copied ? 'Link copiado!' : 'Compartilhar Receita'}
-        </button>
+        <div>
+          <input
+            type="image"
+            data-testid="share-btn"
+            onClick={ copyToClipboard }
+            alt="Compartilhar Receita"
+            src={ shareIcon }
+          />
+          { copied && 'Link copiado!' }
+        </div>
         <input
           type="image"
           data-testid="favorite-btn"
