@@ -9,7 +9,7 @@ function FavoriteIcon({ recipe }) {
   const [favorited, setFavorited] = useState(false);
   const typeOf = useHistory().location.pathname.includes('comida') ? 'Meal' : 'Drink';
   const contextValue = useContext(RecipesContext);
-  const { handleFavoriteRecipes, removeFavoriteRecipes, favoriteRecipes } = contextValue;
+  const { handleFavoriteRecipes, removeFavoriteRecipes } = contextValue;
 
   const newFavoriteRecipes = {
     id: recipe[`id${typeOf}`],
@@ -21,9 +21,6 @@ function FavoriteIcon({ recipe }) {
     image: recipe[`str${typeOf}Thumb`],
   };
 
-  /* const favoritedContext = favoriteRecipes
-    .some((favRecipe) => favRecipe.id === newFavoriteRecipes.id); */
-
   const favsLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes')) !== null
     ? JSON.parse(localStorage.getItem('favoriteRecipes')) : [];
 
@@ -31,7 +28,7 @@ function FavoriteIcon({ recipe }) {
     .some((favRecipe) => favRecipe.id === newFavoriteRecipes.id);
 
   useEffect(() => {
-    if (/* favoritedContext ||  */favoritedLocalStorage) {
+    if (favoritedLocalStorage) {
       setFavorited(true);
     }
   }, [favoritedLocalStorage]);
