@@ -13,6 +13,7 @@ const API_DRINK_INGREDIENTS = 'https://www.thecocktaildb.com/api/json/v1/1/list.
 const API_FOOD_AREA = 'https://www.themealdb.com/api/json/v1/1/list.php?a=list';
 const API_FOOD_FILTER_AREA = 'https://www.themealdb.com/api/json/v1/1/filter.php?a=';
 const API_FILTER_FOOD = 'https://www.themealdb.com/api/json/v1/1/filter.php?c=';
+const API_FILTER_DRINK = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=';
 
 export const getApiByAllDrinks = async () => {
   const { drinks } = await fetch(API_BY_ALL_DRINKS)
@@ -102,4 +103,10 @@ export const RecipesFilterFood = async (nameCategory) => {
   const { meals } = await fetch(`${API_FILTER_FOOD}${nameCategory}`)
     .then((res) => res.json());
   return meals;
+};
+
+export const RecipesFilterDrink = async (nameCategory) => {
+  const { drinks } = await fetch(`${API_FILTER_DRINK}${nameCategory}`)
+    .then((res) => res.json());
+  return drinks;
 };

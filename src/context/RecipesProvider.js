@@ -99,6 +99,7 @@ function RecipesProvider({ children }) {
     setInProgressRecipes,
     favoriteRecipes,
     setFavoriteRecipes,
+    setIngredientsInProgress,
   };
 
   return (
