@@ -78,10 +78,23 @@ function Drinks({ match: { path } }) {
     }
   }
 
+  async function handleClickAll() {
+    const drinks = await getApiByAllDrinks();
+    setNameCategoryFilter('');
+    setDrinksAll(drinks);
+  }
+
   return (
     <div>
       <Header pageTitle="Bebidas" hasSearchIcon="active" />
       <SearchBar path={ path } />
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ handleClickAll }
+      >
+        All
+      </button>
       {/* Renderiza os 5 botões de categorias */}
       {categories.map((element, index) => (
         <button
