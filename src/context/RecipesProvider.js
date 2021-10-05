@@ -21,28 +21,30 @@ function RecipesProvider({ children }) {
     setSelected((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const [doneRecipes, setDoneRecipes] = useState([{
-    id: 0,
-    type: 'food',
-    area: '',
-    category: '',
-    alcoholicOrNot: '',
-    name: '',
-    image: '',
-    doneDate: '',
-    tags: [],
-  },
-  {
-    id: 1,
-    type: 'drink',
-    area: '',
-    category: '',
-    alcoholicOrNot: '',
-    name: '',
-    image: '',
-    doneDate: '',
-    tags: [],
-  }]); // é um array de objetos da seguinte forma:
+  const [doneRecipes, setDoneRecipes] = useState([
+    {
+      id: '52771',
+      type: 'comida',
+      area: 'Italian',
+      category: 'Vegetarian',
+      alcoholicOrNot: '',
+      name: 'Spicy Arrabiata Penne',
+      image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
+      doneDate: '23/06/2020',
+      tags: ['Pasta', 'Curry'],
+    },
+    {
+      id: '178319',
+      type: 'bebida',
+      area: '',
+      category: 'Cocktail',
+      alcoholicOrNot: 'Alcoholic',
+      name: 'Aquamarine',
+      image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
+      doneDate: '23/06/2020',
+      tags: [],
+    },
+  ]); // é um array de objetos da seguinte forma:
   /* [{
     id: id-da-receita,
     type: comida-ou-bebida,
@@ -55,9 +57,14 @@ function RecipesProvider({ children }) {
     tags: array-de-tags-da-receita-ou-array-vazio
 }] */
 
+  function handleDoneRecipes(recipe) {
+    const newDoneRecipes = [...doneRecipes, recipe];
+    setDoneRecipes(newDoneRecipes);
+  }
+
   const [inProgressRecipes, setInProgressRecipes] = useState({
     meals: {}, // colocar os ids
-    coocktails: [],
+    cocktails: [],
   }); // segue o formato:
   /* {
     cocktails: {
@@ -70,10 +77,31 @@ function RecipesProvider({ children }) {
     }
 } */
 
-  const [ingredientsInProgress, setIngredientsInProgress] = useState({
-    meals: [], // colocar os ingredientes
-    drinks: [],
-  });
+  function handleMealsInProgress(idMeal, ingredientsMeal) {
+    const recipesInProgress = { ...inProgressRecipes };
+    const newRecipesInProgress = {
+      ...recipesInProgress,
+      meals: {
+        ...recipesInProgress.meals,
+        [idMeal]: ingredientsMeal,
+      },
+    };
+    setInProgressRecipes(newRecipesInProgress);
+    localStorage.setItem('inProgressRecipes', JSON.stringify(newRecipesInProgress));
+  }
+
+  function handleCocktailsInProgress(idDrink, ingredientsDrink) {
+    const recipesInProgress = { ...inProgressRecipes };
+    const newRecipesInProgress = {
+      ...recipesInProgress,
+      cocktails: {
+        ...recipesInProgress.cocktails,
+        [idDrink]: ingredientsDrink,
+      },
+    };
+    setInProgressRecipes(newRecipesInProgress);
+    localStorage.setItem('inProgressRecipes', JSON.stringify(newRecipesInProgress));
+  }
 
   const [favoriteRecipes, setFavoriteRecipes] = useState([]); // array de objetos, na seguinte forma:
   /* [{
@@ -86,25 +114,32 @@ function RecipesProvider({ children }) {
     image: imagem-da-receita
 }] */
 
-  /* function handleRecipesInProgress(idFood, idDrink) {
-    const foodsinProgress = [...inProgressRecipes.coocktails, idFood];
-    const drinksinProgress = [...inProgressRecipes.drinks, idDrink];
-    const newRecipesInProgress = {
-      foods: idFood ? foodsinProgress : inProgressRecipes.coocktails,
-      drinks: drinksinProgress,
-    };
-    setInProgressRecipes(newRecipesInProgress);
-  } */ // revisar
+  function handleFavoriteRecipes(recipe) { // tô pegando pelo localStorage porque quando muda a URL não tá salvando o estado
+    if (!(favoriteRecipes.some((recipeFav) => recipeFav.id === recipe.id))) {
+      const favsLocalStorage = JSON.parse(localStorage
+        .getItem('favoriteRecipes')) !== null
+        ? JSON.parse(localStorage.getItem('favoriteRecipes')) : [];
+      const newFavoriteRecipes = [...favsLocalStorage, recipe];
+      setFavoriteRecipes(newFavoriteRecipes);
+      localStorage
+        .setItem('favoriteRecipes', JSON.stringify(
+          newFavoriteRecipes,
+        ));
+    }
+  } // só adiciona aos favoritos uma vez
 
-  /* function handleIngredientsInProgress(foodIngredients, drinkIngredients) {
-    const foodsinProgress = foodIngredients;
-    const drinksinProgress = drinkIngredients;
-    const newRecipesInProgress = {
-      foods: foodIngredients ? foodsinProgress : inProgressRecipes.meals,
-      drinks: drinksinProgress,
-    };
-    setIngredientsInProgress(newRecipesInProgress);
-  } */ // revisar
+  function removeFavoriteRecipes(recipe) { // tô pegando pelo localStorage porque quando muda a URL não tá salvando o estado
+    const favsLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes')) !== null
+      ? JSON.parse(localStorage.getItem('favoriteRecipes')) : [];
+    const favoriteRecipesRem = [...favsLocalStorage];
+    const newFavoriteRecipes = favoriteRecipesRem
+      .filter((favRecipe) => favRecipe.id !== recipe.id);
+    setFavoriteRecipes(newFavoriteRecipes);
+    localStorage
+      .setItem('favoriteRecipes', JSON.stringify(
+        newFavoriteRecipes,
+      ));
+  }
 
   const contextValue = {
     data,
@@ -112,15 +147,15 @@ function RecipesProvider({ children }) {
     setSearchRecipes,
     handleChangeSearch,
     doneRecipes,
-    setDoneRecipes,
+    handleDoneRecipes,
     inProgressRecipes,
-    /* handleRecipesInProgress, */
-    ingredientsInProgress,
-    /* handleIngredientsInProgress, */
     setInProgressRecipes,
     favoriteRecipes,
     setFavoriteRecipes,
-    setIngredientsInProgress,
+    handleMealsInProgress,
+    handleCocktailsInProgress,
+    handleFavoriteRecipes,
+    removeFavoriteRecipes,
   };
 
   return (
