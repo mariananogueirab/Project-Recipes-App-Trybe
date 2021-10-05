@@ -73,12 +73,27 @@ function Foods({ match: { path } }) {
       const meals = await getApiByAllFoods();
       setFoodsAll(meals);
       setNameCategoryFilter('');
+      console.log(meals);
     }
   }
+
+  async function handleClickAll() {
+    const meals = await getApiByAllFoods();
+    setNameCategoryFilter('');
+    setFoodsAll(meals);
+  }
+
   return (
     <div>
       <Header pageTitle="Comidas" hasSearchIcon="active" />
       <SearchBar path={ path } />
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ handleClickAll }
+      >
+        All
+      </button>
       {/* Renderiza os 5 botões de categorias */}
       {categories.map((element, index) => (
         <button
