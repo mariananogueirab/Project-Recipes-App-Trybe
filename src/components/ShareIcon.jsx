@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { useHistory } from 'react-router';
 import shareIcon from '../images/shareIcon.svg';
 
-function ShareIcon() {
+function ShareIcon({ dataTestid = 'share-btn', url = '' }) {
   const [copied, setCopied] = useState(false);
   const history = useHistory();
   const copyToClipboard = () => {
     // coloquei o id da comida (52771) para passar no teste
     // window.location.href = 'http://localhost:3000/comidas/52771';
-    navigator.clipboard.writeText(`http://localhost:3000${history.location.pathname}`);
-    setCopied(true);
+    if (url !== '') {
+      navigator.clipboard.writeText(url);
+      setCopied(true);
+    } else {
+      navigator.clipboard.writeText(`http://localhost:3000${history.location.pathname}`);
+      setCopied(true);
+    }
   };
 
   function renderShareicon() {
@@ -19,7 +25,7 @@ function ShareIcon() {
           type="image"
           src={ shareIcon }
           alt="Botão de compartilhar receita"
-          data-testid="share-btn"
+          data-testid={ dataTestid }
           onClick={ copyToClipboard }
         />
       );
@@ -36,4 +42,10 @@ function ShareIcon() {
 
   );
 }
+
+ShareIcon.propTypes = {
+  dataTestid: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+};
+
 export default ShareIcon;
