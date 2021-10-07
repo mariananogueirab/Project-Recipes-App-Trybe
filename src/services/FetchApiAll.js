@@ -106,7 +106,11 @@ export const RecipesFilterFood = async (nameCategory) => {
 };
 
 export const RecipesFilterDrink = async (nameCategory) => {
-  const { drinks } = await fetch(`${API_FILTER_DRINK}${nameCategory}`)
-    .then((res) => res.json());
-  return drinks;
+  try {
+    const results = await fetch(`${API_FILTER_DRINK}${nameCategory}`);
+    const { drinks } = await results.json();
+    return drinks;
+  } catch (error) {
+    console.error(error);
+  }
 };
